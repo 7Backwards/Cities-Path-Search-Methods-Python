@@ -1,3 +1,3 @@
 def main(self):
-    """Main function"""
+    """Main function."""
     print("Hello World!")

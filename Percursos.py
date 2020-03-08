@@ -1,7 +1,7 @@
 import Percurso
 
 
-class Percursos(Percurso):
+class Percursos:
 
     historicoPercursos = [Percurso]
 
