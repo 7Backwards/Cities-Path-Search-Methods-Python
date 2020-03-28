@@ -1,3 +1,5 @@
+import networkx as nx
+import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import ttk
 
@@ -59,6 +61,18 @@ class OptionsPage(tk.Frame):
                             command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
+
+def testGraph():
+    G = nx.Graph()
+    G.add_edge('A', 'B', weight=4)
+    G.add_edge('B', 'D', weight=2)
+    G.add_edge('A', 'C', weight=3)
+    G.add_edge('C', 'D', weight=4)
+    print(nx.shortest_path(G, 'A', 'D', weight='weight'))
+    nx.draw(G)
+    plt.savefig("simple_path.png") # save as png
+    plt.show() # display
+
 class MapPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -69,6 +83,12 @@ class MapPage(tk.Frame):
         button1 = ttk.Button(self, text = "Back to start menu",
                             command = lambda: controller.show_frame(StartPage))
         button1.pack()
+
+        button2 = ttk.Button(self, text = "test graph",
+                            command = lambda: testGraph())
+        button2.pack()
+
+
 
 app = Main()
 app.mainloop()
