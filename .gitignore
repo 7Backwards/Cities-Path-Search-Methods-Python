@@ -207,5 +207,5 @@ dmypy.json
 .history
 
 ### Git Ignore venv ###
-env/
-venv/
+/env
+/venv
