@@ -1,11 +1,9 @@
 import sys
-from os import system
+import matplotlib.pyplot as plt; plt.ion()
 
-import networkx as nx
-import matplotlib.pyplot as plt
 import tkinter as tk
 import csv
-import numpy as np
+
 from tkinter import ttk
 
 LARGE_FONT = ("Verdana", 12)
@@ -69,45 +67,52 @@ class OptionsPage(tk.Frame):
 
 
 def testGraph():
-    with open('pt.csv', newline='') as csvfile:
-        data = list(csv.reader(csvfile))
-
-    # Remove 1st row (table names)
-    data.pop(0)
-    data = np.array(data)
-
-    lat = [item[1] for item in data]
-    long = [item[2] for item in data]
-    lat = np.array(lat)
-    #lat.astype(float)
-    print(lat)
-    long = np.array(long)
-    #long.astype(float)
-    print(long)
-    plt.axis([min(lat), max(lat), min(long), max(long)])
-    #plt.axis([min(lat), max(lat), min(long), max(long)])
-
-    plt.plot(lat, long, 'bo')
+    
+    #Read csv
+    with open('pt.txt','r') as f_input:
+        csv_input = csv.reader(f_input, delimiter=',', skipinitialspace=True)
+        nome = []
+        x = []
+        y = []
+        for cols in csv_input:
+            nome.append(str(cols[0]))
+            y.append(float(cols[1]))
+            x.append(float(cols[2]))
 
 
+    plt.scatter(x, y, s=10, c='b', marker='o', label = 'Ports',alpha=0.65, zorder=1)
+    for i in range (0,len(x)):
+        plt.annotate(nome[i],xy=(x[i],y[i]),size=6)
 
+    #Define lines
+    x_values = [x[0], x[5]]
+    y_values = [y[0], y[5]]
+    #Set line
+    plt.plot(x_values, y_values)
 
-    #plt.gca().set_aspect('equal', adjustable='box')
-    # plotting points as a scatter plot
+    #Define background image
+    image = plt.imread("mapa_portugal.png")
+    #Define background image x and y axis range
+    ext = [-9.8, -6, 36.8, 42.2]
+    plt.imshow(image, zorder = 0, extent = ext)
+    aspect=image.shape[0]/float(image.shape[1])*((ext[1]-ext[0])/(ext[3]-ext[2]))
+    plt.gca().set_aspect(aspect)
+    
+    #Set x axis range
+    plt.xlim(-9.8,-6)
+    #Set y axis range
+    plt.ylim(36.8,42.2)
+    #Hide x axis values
+    plt.xticks([])
+    #Hide y axis values
+    plt.yticks([])
+    # giving a title to my graph 
+    plt.title('Cidades de Portugal')
 
-
+    # function to show the plot
     plt.show()
-    '''
-    G = nx.Graph()
-    G.add_edge('A', 'B', weight=4)
-    G.add_edge('B', 'D', weight=2)
-    G.add_edge('A', 'C', weight=3)
-    G.add_edge('C', 'D', weight=4)
-    print(nx.shortest_path(G, 'A', 'D', weight='weight'))
-    nx.draw(G)
-    plt.savefig("simple_path.png")  # save as png
-    plt.show()  # display
-'''
+
+
 
 
 class MapPage(tk.Frame):
