@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "c:\\Users\\pedro\\Documents\\Projects-Python\\Metodos-de-Procura-Python\\env\\Scripts\\python.exe"
+  "python.pythonPath": "c:\\Users\\pedro\\Documents\\Projects-Python\\Metodos-de-Procura-Python\\env\\Scripts\\python.exe",
+  "python.formatting.provider": "autopep8"
 }
