@@ -1,3 +1,4 @@
+from CountryMap import CountryMap
 from tkinter import ttk
 import csv
 import tkinter as tk
@@ -15,7 +16,7 @@ class Main(tk.Tk):
         tk.Tk.__init__(self, *args, *kwargs)
 
         if sys.platform.startswith('win'):
-            tk.Tk.iconbitmap(self, default='favicon.ico')
+            tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
         tk.Tk.wm_title(self, "IA - Search Methods")
 
@@ -69,8 +70,8 @@ class OptionsPage(tk.Frame):
 def testGraph():
 
     # Read csv
-    with open('pt.csv', 'r', newline='', encoding='utf-8') as f_input:
-        csv_input = csv.reader(f_input, delimiter=',')
+    with open('Res/pt.csv', 'r', newline='', encoding='utf-8') as f_input:
+        csv_input = csv.reader(f_input, delimiter=',', skipinitialspace=True)
         # ByPass header line
         next(csv_input, None)
         nome = []
@@ -93,7 +94,7 @@ def testGraph():
     plt.plot(x_values, y_values)
 
     # Define background image
-    image = plt.imread("mapa_portugal.png")
+    image = plt.imread("Res/mapa_portugal.png")
     # Define background image x and y axis range
     ext = [-9.8, -6, 36.8, 42.2]
     plt.imshow(image, zorder=0, extent=ext)
