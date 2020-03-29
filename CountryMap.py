@@ -30,5 +30,21 @@ class CountryMap:
     def clearPaths(self):
         self.pathsMap.clear()
 
-    def getMaoName(self):
+    def getMapName(self):
         return self.mapName
+
+    def getNodes(self):
+        return self.nodesMap
+
+    def getEdges(self):
+        return self.pathsMap
+
+    def printNodes(self):
+        for node in self.nodesMap:
+            print("City: {}\tLatitude: {}\tLongitude: {}".format(
+                node.getName(), node.getLatitude(), node.getLongitude()))
+
+    def printPaths(self):
+        for path in self.pathsMap:
+            print("City 1: {}\t\tCity 2: {}\t\tWeight: {}".format(
+                path.getCity1(), path.getCity1(), path.getWeight()))

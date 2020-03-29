@@ -1,4 +1,6 @@
 from CountryMap import CountryMap
+from CityNode import CityNode
+from PathEdge import PathEdge
 from tkinter import ttk
 import csv
 import tkinter as tk
@@ -14,6 +16,38 @@ class Main(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
+
+        # Get data from files
+        self.Portugal = CountryMap("Mapa de Portugal")
+        # Read csv
+        with open('Res/pt.csv', 'r', newline='', encoding='utf-8') as f_input:
+            csv_input = csv.reader(
+                f_input, delimiter=',', skipinitialspace=True)
+            # ByPass header line
+            next(csv_input, None)
+
+            for cols in csv_input:
+                tempNode = CityNode(cols[0], cols[1], cols[2])
+                self.Portugal.addNode(tempNode)
+        # self.Portugal.printNodes()
+
+        with open('Res/arestas.csv', 'r', newline='', encoding='utf-8') as f_input:
+            csv_input = csv.reader(
+                f_input, delimiter=',', skipinitialspace=True)
+            # ByPass header line
+            next(csv_input, None)
+
+            for cols in csv_input:
+                tempPath = PathEdge(cols[0], cols[1], cols[2])
+                self.Portugal.addPath(tempPath)
+        # self.Portugal.printPaths()
+        # List Test
+        self.list = tk.Listbox(self)
+        i = 0
+        for edge in self.Portugal.getEdges():
+            self.list.insert(i, edge.getCity1())
+            i += 1
+        self.list.pack()
 
         if sys.platform.startswith('win'):
             tk.Tk.iconbitmap(self, default='Res/favicon.ico')

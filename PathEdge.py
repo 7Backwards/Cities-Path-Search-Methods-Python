@@ -14,5 +14,5 @@ class PathEdge():
     def getCity2(self):
         return self.city2
 
-    def getweight(self):
+    def getWeight(self):
         return self.weight
