@@ -4,6 +4,8 @@ from os import system
 import networkx as nx
 import matplotlib.pyplot as plt
 import tkinter as tk
+import csv
+import numpy as np
 from tkinter import ttk
 
 LARGE_FONT = ("Verdana", 12)
@@ -67,6 +69,35 @@ class OptionsPage(tk.Frame):
 
 
 def testGraph():
+    with open('pt.csv', newline='') as csvfile:
+        data = list(csv.reader(csvfile))
+
+    # Remove 1st row (table names)
+    data.pop(0)
+    data = np.array(data)
+
+    lat = [item[1] for item in data]
+    long = [item[2] for item in data]
+    lat = np.array(lat)
+    #lat.astype(float)
+    print(lat)
+    long = np.array(long)
+    #long.astype(float)
+    print(long)
+    plt.axis([min(lat), max(lat), min(long), max(long)])
+    #plt.axis([min(lat), max(lat), min(long), max(long)])
+
+    plt.plot(lat, long, 'bo')
+
+
+
+
+    #plt.gca().set_aspect('equal', adjustable='box')
+    # plotting points as a scatter plot
+
+
+    plt.show()
+    '''
     G = nx.Graph()
     G.add_edge('A', 'B', weight=4)
     G.add_edge('B', 'D', weight=2)
@@ -76,6 +107,7 @@ def testGraph():
     nx.draw(G)
     plt.savefig("simple_path.png")  # save as png
     plt.show()  # display
+'''
 
 
 class MapPage(tk.Frame):
