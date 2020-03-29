@@ -198,6 +198,7 @@ dmypy.json
 
 ### VisualStudioCode ###
 .vscode/*
+.vscode/settings.json
 
 
 ### VisualStudioCode Patch ###
