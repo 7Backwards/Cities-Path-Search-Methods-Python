@@ -16,7 +16,6 @@ LARGE_FONT = ("Verdana", 12)
 
 class Main(tk.Tk):
 
-    
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
 
@@ -24,9 +23,7 @@ class Main(tk.Tk):
         self.data = SingletonData()
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
-        
-        
-        
+
         if sys.platform.startswith('win'):
             tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
@@ -82,7 +79,7 @@ class StartPage(tk.Frame):
         # Get data from files
         self.data = SingletonData()
         self.Portugal = self.data.Map
-        
+
         button1 = ttk.Button(self, text="View Map",
                              command=lambda: ViewMap(self.Portugal).testGraph())
         button1.pack()
@@ -115,11 +112,10 @@ class MapPage(tk.Frame):
                              command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-
         # Get data from files
         self.data = SingletonData()
         self.Portugal = self.data.Map
-        
+
         button2 = ttk.Button(self, text="test graph",
                              command=lambda: ViewMap(self.Portugal).testGraph())
         button2.pack()
