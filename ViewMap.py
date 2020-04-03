@@ -11,13 +11,18 @@ plt.ion()
 
 class ViewMap():
 
-    def testGraph(self,countryMapData):
+    countryMapData = None
+    
+    def __init__(self,countryMapData):
+        self.countryMapData=countryMapData
+        
+    def testGraph(self):
 
         nome = []
         x = []
         y= []
         
-        for cols in countryMapData.getNodes():
+        for cols in self.countryMapData.getNodes():
             
             nome.append(str(cols.name))
             y.append(float(cols.lat))
@@ -56,3 +61,9 @@ class ViewMap():
 
         # function to show the plot
         plt.show()
+
+
+    # def addLine(self,cityA,cityB):
+        
+        
+        

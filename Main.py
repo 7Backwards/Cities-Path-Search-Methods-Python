@@ -83,7 +83,7 @@ class StartPage(tk.Frame):
         self.Portugal = self.data.Map
         
         button1 = ttk.Button(self, text="View Map",
-                             command=lambda: ViewMap().testGraph(self.Portugal))
+                             command=lambda: ViewMap(self.Portugal).testGraph())
         button1.pack()
 
         button2 = ttk.Button(self, text="Search Methods",
