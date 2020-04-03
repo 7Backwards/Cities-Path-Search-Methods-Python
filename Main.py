@@ -16,6 +16,8 @@ LARGE_FONT = ("Verdana", 12)
 
 class Main(tk.Tk):
 
+    data = None
+    
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
 
@@ -123,3 +125,4 @@ class MapPage(tk.Frame):
 
 app = Main()
 app.mainloop()
+ViewMap(Main.data.Map).addLine("Leiria","Lisboa")

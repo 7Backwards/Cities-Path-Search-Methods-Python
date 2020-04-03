@@ -12,16 +12,16 @@ plt.ion()
 class ViewMap():
 
     countryMapData = None
+
     
     def __init__(self,countryMapData):
         self.countryMapData=countryMapData
         
     def testGraph(self):
-
+        
         nome = []
         x = []
         y= []
-        
         for cols in self.countryMapData.getNodes():
             
             nome.append(str(cols.name))
@@ -33,11 +33,7 @@ class ViewMap():
         for i in range(0, len(x)):
             plt.annotate(nome[i], xy=(x[i], y[i]), size=6)
 
-        # Define lines
-        x_values = [x[0], x[5]]
-        y_values = [y[0], y[5]]
-        # Set line
-        plt.plot(x_values, y_values)
+        
 
         # Define background image
         image = plt.imread("Res/mapa_portugal.png")
@@ -63,7 +59,25 @@ class ViewMap():
         plt.show()
 
 
-    # def addLine(self,cityA,cityB):
+    def addLine(self,cityA,cityB):
+        
+        nome = []
+        x = []
+        y= []
+        for cols in self.countryMapData.getNodes():
+            
+            nome.append(str(cols.name))
+            y.append(float(cols.lat))
+            x.append(float(cols.lon))        
+
+        indexA = nome.index(cityA)
+        indexB = nome.index(cityB)
+         # Define lines
+        x_values = [x[indexA], x[indexB]]
+        y_values = [y[indexA], y[indexB]]
+        # Set line
+        plt.plot(x_values, y_values)
+
         
         
         
