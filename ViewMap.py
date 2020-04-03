@@ -64,6 +64,7 @@ class ViewMap():
         nome = []
         x = []
         y= []
+        
         for cols in self.countryMapData.getNodes():
             
             nome.append(str(cols.name))

@@ -16,7 +16,6 @@ LARGE_FONT = ("Verdana", 12)
 
 class Main(tk.Tk):
 
-    data = None
     
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
@@ -117,12 +116,14 @@ class MapPage(tk.Frame):
         button1.pack()
 
 
+        # Get data from files
+        self.data = SingletonData()
+        self.Portugal = self.data.Map
         
         button2 = ttk.Button(self, text="test graph",
-                             command=lambda: ViewMap().testGraph())
+                             command=lambda: ViewMap(self.Portugal).testGraph())
         button2.pack()
 
 
 app = Main()
 app.mainloop()
-ViewMap(Main.data.Map).addLine("Leiria","Lisboa")
