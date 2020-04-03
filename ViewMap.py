@@ -2,6 +2,10 @@ import csv
 import tkinter as tk
 import sys
 import matplotlib.pyplot as plt
+from CountryMap import CountryMap
+from CityNode import CityNode
+from PathEdge import PathEdge
+from SingletonData import SingletonData
 plt.ion()
 
 
@@ -9,19 +13,20 @@ class ViewMap():
 
     def testGraph(self):
 
-        # Read csv
-        with open('Res/pt.csv', 'r', newline='', encoding='utf-8') as f_input:
-            csv_input = csv.reader(
-                f_input, delimiter=',', skipinitialspace=True)
-            # ByPass header line
-            next(csv_input, None)
-            nome = []
-            x = []
-            y = []
-            for cols in csv_input:
-                nome.append(str(cols[0]))
-                y.append(float(cols[1]))
-                x.append(float(cols[2]))
+        self.data = SingletonData()
+        nome = []
+        x = []
+        y = []
+        
+        for cols in self.data.Map.getNodes():
+            
+            nome.append(str(cols.name))
+            y.append(float(cols.lat))
+            x.append(float(cols.lon))
+        # print (nome)
+        # print (x)
+        # print (y)
+       
 
         plt.scatter(x, y, s=10, c='b', marker='o',
                     label='Ports', alpha=0.65, zorder=1)

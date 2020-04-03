@@ -1,7 +1,7 @@
 # Node class
 
 
-class CityNode():
+class CityNode:
 
     def __init__(self, name, lat, lon):
         self.name = name

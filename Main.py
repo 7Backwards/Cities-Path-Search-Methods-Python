@@ -1,7 +1,7 @@
 from CountryMap import CountryMap
 from CityNode import CityNode
 from PathEdge import PathEdge
-from Data import Data
+from SingletonData import SingletonData
 from ViewMap import ViewMap
 from tkinter import ttk
 import csv
@@ -20,11 +20,12 @@ class Main(tk.Tk):
         tk.Tk.__init__(self, *args, *kwargs)
 
         # Get data from files
-        self.mMap = Data()
-        self.Portugal = self.mMap.Map
-
-        self.Cities = self.mMap.mapCities
-
+        self.data = SingletonData()
+        self.Portugal = self.data.Map
+        self.Cities = self.data.mapCities
+        self.data1 = SingletonData()
+        
+        
         if sys.platform.startswith('win'):
             tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
