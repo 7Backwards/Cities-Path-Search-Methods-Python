@@ -11,22 +11,17 @@ plt.ion()
 
 class ViewMap():
 
-    def testGraph(self):
+    def testGraph(self,countryMapData):
 
-        self.data = SingletonData()
         nome = []
         x = []
-        y = []
+        y= []
         
-        for cols in self.data.Map.getNodes():
+        for cols in countryMapData.getNodes():
             
             nome.append(str(cols.name))
             y.append(float(cols.lat))
             x.append(float(cols.lon))
-        # print (nome)
-        # print (x)
-        # print (y)
-       
 
         plt.scatter(x, y, s=10, c='b', marker='o',
                     label='Ports', alpha=0.65, zorder=1)

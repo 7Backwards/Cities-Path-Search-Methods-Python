@@ -23,7 +23,7 @@ class Main(tk.Tk):
         self.data = SingletonData()
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
-        self.data1 = SingletonData()
+        
         
         
         if sys.platform.startswith('win'):
@@ -78,8 +78,12 @@ class StartPage(tk.Frame):
             self, text="Map Search Methods - 2020", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
+        # Get data from files
+        self.data = SingletonData()
+        self.Portugal = self.data.Map
+        
         button1 = ttk.Button(self, text="View Map",
-                             command=lambda: ViewMap().testGraph())
+                             command=lambda: ViewMap().testGraph(self.Portugal))
         button1.pack()
 
         button2 = ttk.Button(self, text="Search Methods",
@@ -110,6 +114,8 @@ class MapPage(tk.Frame):
                              command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
+
+        
         button2 = ttk.Button(self, text="test graph",
                              command=lambda: ViewMap().testGraph())
         button2.pack()
