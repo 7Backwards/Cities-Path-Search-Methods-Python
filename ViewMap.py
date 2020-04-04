@@ -1,5 +1,3 @@
-import tkinter as tk
-import sys
 import matplotlib.pyplot as plt
 from CountryMap import CountryMap
 from CityNode import CityNode

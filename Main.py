@@ -197,4 +197,7 @@ class MapPage(tk.Frame):
 
 app = Main()
 matplotlib.pyplot.close(ViewMap(SingletonData().Map).testGraph())
+app.lift()
+app.attributes('-topmost', True)
+app.after_idle(app.attributes, '-topmost', False)
 app.mainloop()
