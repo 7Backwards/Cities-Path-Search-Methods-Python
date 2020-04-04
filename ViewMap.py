@@ -12,8 +12,8 @@ plt.ion()
 class ViewMap():
 
     countryMapData = None
+    pathData = None
 
-    
     def __init__(self,countryMapData):
         self.countryMapData=countryMapData
         
@@ -54,12 +54,12 @@ class ViewMap():
         plt.yticks([])
         # giving a title to my graph
         plt.title('Cidades de Portugal')
-
+        self.addWhiteLine("Viseu","Aveiro","3")
         # function to show the plot
         plt.show()
 
 
-    def addLine(self,cityA,cityB):
+    def addWhiteLine(self,cityA,cityB,weight):
         
         nome = []
         x = []
@@ -77,7 +77,29 @@ class ViewMap():
         x_values = [x[indexA], x[indexB]]
         y_values = [y[indexA], y[indexB]]
         # Set line
-        plt.plot(x_values, y_values)
+        plt.plot(x_values, y_values, 'w')
+        
+        
+    def addBlueLine(self,cityA,cityB,weight):
+        
+        nome = []
+        x = []
+        y= []
+        
+        for cols in self.countryMapData.getNodes():
+            
+            nome.append(str(cols.name))
+            y.append(float(cols.lat))
+            x.append(float(cols.lon))        
+
+        indexA = nome.index(cityA)
+        indexB = nome.index(cityB)
+         # Define lines
+        x_values = [x[indexA], x[indexB]]
+        y_values = [y[indexA], y[indexB]]
+        # Set line
+        plt.plot(x_values, y_values, 'b')
+        plt.text((x_values[0] + x_values[1]) / 2 ,(y_values[0] + y_values[1]) / 2,weight,color = 'blue')
 
         
         
