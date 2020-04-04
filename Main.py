@@ -1,5 +1,6 @@
 import sys
 from matplotlib.figure import Figure
+from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from CountryMap import CountryMap
 from CityNode import CityNode
@@ -13,6 +14,7 @@ matplotlib.use("TkAgg")
 
 
 LARGE_FONT = ("Verdana", 12)
+style.use("ggplot")
 
 
 class Main(tk.Tk):
@@ -29,7 +31,7 @@ class Main(tk.Tk):
         tk.Tk.wm_title(self, "IA - Search Methods")
 
         container = tk.Frame(self)
-        self.geometry('{}x{}'.format(800, 600))
+        self.geometry('{}x{}'.format(800, 800))
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -146,19 +148,15 @@ class SearchMethodPage(tk.Frame):
         ##################################################################
         '''
 
-        f = Figure(figsize=(5, 5), dpi=100)
-        a = f.add_subplot(111)
-        a.plot([1, 2, 3, 4, 5, 6, 7, 8], [5, 6, 1, 3, 8, 9, 3, 5])
-
         # Grid setup
         canvasFrame.grid_columnconfigure(0, weight=1)
         canvasFrame.grid_rowconfigure(0, weight=1)
         plotFrame.grid(row=0, column=0, sticky="nsew")
         listView.grid(row=0, column=1, sticky="nsew")
 
-        canvas = FigureCanvasTkAgg(f, master=plotFrame)
-        # canvas.show()
-        canvas.get_tk_widget().pack()
+        canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal).testGraph(), master=plotFrame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
 
         optionsMenuFrame.grid_columnconfigure(0, weight=1)
         fromCityOptionsMenu.grid(row=0, column=1, sticky="w", padx=20)
@@ -198,4 +196,5 @@ class MapPage(tk.Frame):
 
 
 app = Main()
+matplotlib.pyplot.close(ViewMap(SingletonData().Map).testGraph())
 app.mainloop()
