@@ -31,7 +31,7 @@ class Main(tk.Tk):
         tk.Tk.wm_title(self, "IA - Search Methods")
 
         container = tk.Frame(self)
-        self.geometry('{}x{}'.format(800, 800))
+        self.geometry('{}x{}'.format(1024, 768))
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -83,23 +83,24 @@ class SearchMethodPage(tk.Frame):
         # Title Label
         self.labelFrame = tk.Label(self, text="Select Cities", font=LARGE_FONT)
         # OptionMenu Frame
-        self.optionsMenuFrame = tk.Frame(self, width=50, height=40)
+        self.optionsMenuFrame = tk.Frame(self)
         # White canvas Frame
         self.canvasFrame = tk.Canvas(self, background="white")
         # Method Selector Label
         self.methodButtonLabel = tk.Label(self, text="Select Search Method")
         # Method Selector Frame
-        self.methodButtonFrame = tk.Frame(self, width=50, height=40)
+        self.methodButtonFrame = tk.Frame(self, width=50, height=20)
         # Back button Frame
-        self.backButtonFrame = tk.Frame(self, width=50, height=100)
+        self.backButtonFrame = tk.Frame(self, width=50, height=40)
         # ListView - prints method iterations
         self.plotFrame = tk.Frame(self.canvasFrame)
-        self.IterationList = tk.Listbox(self.canvasFrame, width=50)
+        self.IterationList = tk.Listbox(self.canvasFrame, width=80)
 
         # Packing Frames
         self.backButtonFrame.pack(side="bottom", fill="both", expand=False)
         self.methodButtonFrame.pack(side="bottom")
         self.methodButtonLabel.pack(side="bottom")
+        self.labelFrame.pack(side="top")
         self.optionsMenuFrame.pack(side="top")
         self.canvasFrame.pack(side="top", fill="both", expand=True)
 
