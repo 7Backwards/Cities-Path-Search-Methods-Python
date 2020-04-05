@@ -208,3 +208,6 @@ dmypy.json
 ### Git Ignore venv ###
 /env
 /venv
+
+#gitignore pylintrc file
+.pylintrc

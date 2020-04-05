@@ -68,34 +68,36 @@ class ViewMap():
 
         # giving a title to graph
         plt.title('Cidades de Portugal')
-
+        
+        
         # function to show the plot
         # plt.show()
         fig = plt.gcf()
         return fig
 
-    def addWhiteLine(self, cityA, cityB):
-
+    def addWhiteLine(self,cityA,cityB):
+        
         nome = []
         x = []
-        y = []
-
+        y= []
+        
         for cols in self.countryMapData.getNodes():
-
+            
             nome.append(str(cols.name))
             y.append(float(cols.lat))
-            x.append(float(cols.lon))
+            x.append(float(cols.lon))        
 
         indexA = nome.index(cityA)
         indexB = nome.index(cityB)
-        # Define lines
+         # Define lines
         x_values = [x[indexA], x[indexB]]
         y_values = [y[indexA], y[indexB]]
         # Set line
         plt.plot(x_values, y_values, 'w')
-
-    def addBlueLine(self, cityA, cityB, weight):
-
+        
+        
+    def addBlueLine(self,cityA,cityB,weight):
+        
         nome = []
         x = []
         y = []
