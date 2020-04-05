@@ -109,7 +109,7 @@ class SearchMethodPage(tk.Frame):
                              command=lambda: controller.show_frame(StartPage))
 
         DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=self.refreshCanvas)
+                            text="DFS", command=self.iterationListPopulate)
         UcsBtn = ttk.Button(methodButtonFrame,
                             text="UCS", command=self.refreshCanvas)
         GreedyBtn = ttk.Button(methodButtonFrame,

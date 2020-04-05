@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-plt.ion()
+plt.ioff()
 
 
 class ViewMap():
