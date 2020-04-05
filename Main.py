@@ -25,13 +25,16 @@ class Main(tk.Tk):
         # Get data from files
         self.data = SingletonData()
 
+        self.attributes("-fullscreen", True)
+        self.bind("<Escape>", self.end_fullscreen)
+
         if sys.platform.startswith('win'):
             tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
         tk.Tk.wm_title(self, "IA - Search Methods")
 
         container = tk.Frame(self)
-        self.geometry('{}x{}'.format(1024, 768))
+        #self.geometry('{}x{}'.format(1024, 768))
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -49,6 +52,9 @@ class Main(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+    def end_fullscreen(self, event=None):
+        self.attributes("-fullscreen", False)
+        return "break"
 
 class StartPage(tk.Frame):
 
@@ -117,9 +123,6 @@ class SearchMethodPage(tk.Frame):
                                text="Greedy", command=self.refreshCanvas)
         AstarBtn = ttk.Button(methodButtonFrame,
                               text="A*", command=self.refreshCanvas)
-
-        methodSearchLabel = tk.Label(
-            methodButtonLabel, text="Select Search Method", font=LARGE_FONT)
 
         fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
         self.fromCityVar = tk.StringVar()  # default value
