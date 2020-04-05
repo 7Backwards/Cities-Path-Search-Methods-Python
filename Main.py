@@ -79,9 +79,10 @@ class StartPage(tk.Frame):
         # Get data from files
         self.data = SingletonData()
         self.Portugal = self.data.Map
-
-        button1 = ttk.Button(self, text="View Map",
-                             command=lambda: ViewMap(self.Portugal).testGraph())
+        arrayPath = []
+        arrayPath.append(PathEdge('Porto', 'Viseu', '133'))
+        button1 = ttk.Button(self, text="test graph",
+                             command=lambda: ViewMap(self.Portugal,arrayPath).testGraph())
         button1.pack()
 
         button2 = ttk.Button(self, text="Search Methods",
@@ -115,9 +116,9 @@ class MapPage(tk.Frame):
         # Get data from files
         self.data = SingletonData()
         self.Portugal = self.data.Map
-
+        arrayPath = [("Viseu","Porto",3)]
         button2 = ttk.Button(self, text="test graph",
-                             command=lambda: ViewMap(self.Portugal).testGraph())
+                             command=lambda: ViewMap(self.Portugal,arrayPath).testGraph())
         button2.pack()
 
 
