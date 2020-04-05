@@ -61,12 +61,18 @@ class StartPage(tk.Frame):
         self.Portugal = SingletonData().Map
 
         button1 = ttk.Button(self, text="View Map",
-                             command=lambda: ViewMap(self.Portugal).testGraph())
+                             command=lambda: ViewMap(self.Portugal, []).testGraph())
         button1.pack()
 
         button2 = ttk.Button(self, text="Search Methods",
                              command=lambda: controller.show_frame(SearchMethodPage))
         button2.pack()
+
+def clickStart(self):
+    #Test paths
+    arrayPath = []
+    arrayPath.append(self.Portugal.pathsMap[1])
+    return arrayPath
 
 
 class SearchMethodPage(tk.Frame):
@@ -118,7 +124,7 @@ class SearchMethodPage(tk.Frame):
         DfsBtn = ttk.Button(methodButtonFrame, text="DFS")
         UcsBtn = ttk.Button(methodButtonFrame, text="UCS")
         GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy")
-        AstarBtn = ttk.Button(methodButtonFrame, text="A*")
+        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=clickStart(self))
 
         methodSearchLabel = tk.Label(
             methodButtonLabel, text="Select Search Method", font=LARGE_FONT)
@@ -154,8 +160,12 @@ class SearchMethodPage(tk.Frame):
         plotFrame.grid(row=0, column=0, sticky="nsew")
         listView.grid(row=0, column=1, sticky="nsew")
 
+        #Test paths
+        arrayPath = []
+        #arrayPath.append(self.Portugal.pathsMap[1])
+
         canvas = FigureCanvasTkAgg(
-            ViewMap(self.Portugal).testGraph(), master=plotFrame)
+            ViewMap(self.Portugal, arrayPath).testGraph(), master=plotFrame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
 
         optionsMenuFrame.grid_columnconfigure(0, weight=1)
@@ -175,6 +185,7 @@ class SearchMethodPage(tk.Frame):
         BackBtn.grid(row=0, column=0, sticky="e", pady=20)
 
 
+
 class MapPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -186,17 +197,14 @@ class MapPage(tk.Frame):
                              command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        # Get data from files
-        self.data = SingletonData()
-        self.Portugal = self.data.Map
-
         button2 = ttk.Button(self, text="test graph",
-                             command=lambda: ViewMap(self.Portugal).testGraph())
+                             command=lambda: ViewMap(SingletonData().Map, []).testGraph())
         button2.pack()
 
 
 app = Main()
-matplotlib.pyplot.close(ViewMap(SingletonData().Map).testGraph())
+#Test paths
+matplotlib.pyplot.close('all')
 app.lift()
 app.attributes('-topmost', True)
 app.after_idle(app.attributes, '-topmost', False)
