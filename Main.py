@@ -68,12 +68,6 @@ class StartPage(tk.Frame):
                              command=lambda: controller.show_frame(SearchMethodPage))
         button2.pack()
 
-def clickStart(self):
-    #Test paths
-    arrayPath = []
-    arrayPath.append(self.Portugal.pathsMap[1])
-    return arrayPath
-
 
 class SearchMethodPage(tk.Frame):
 
@@ -85,105 +79,98 @@ class SearchMethodPage(tk.Frame):
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
 
+        # Setup GUI
         # Title Label
-        label = tk.Label(self, text="Select Cities", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+        self.labelFrame = tk.Label(self, text="Select Cities", font=LARGE_FONT)
         # OptionMenu Frame
-        optionsMenuFrame = tk.Frame(self, width=50, height=40)
+        self.optionsMenuFrame = tk.Frame(self, width=50, height=40)
         # White canvas Frame
-        canvasFrame = tk.Canvas(self, background="white")
+        self.canvasFrame = tk.Canvas(self, background="white")
         # Method Selector Label
-        methodButtonLabel = tk.Label(self, text="Select Search Method")
+        self.methodButtonLabel = tk.Label(self, text="Select Search Method")
         # Method Selector Frame
-        methodButtonFrame = tk.Frame(self, width=50, height=40)
+        self.methodButtonFrame = tk.Frame(self, width=50, height=40)
         # Back button Frame
-        backButtonFrame = tk.Frame(self, width=50, height=100)
+        self.backButtonFrame = tk.Frame(self, width=50, height=100)
+        # ListView - prints method iterations
+        self.plotFrame = tk.Frame(self.canvasFrame)
+        self.IterationList = tk.Listbox(self.canvasFrame, width=50)
 
         # Packing Frames
-        backButtonFrame.pack(side="bottom", fill="both", expand=False)
-        methodButtonFrame.pack(side="bottom")
-        methodButtonLabel.pack(side="bottom")
-        optionsMenuFrame.pack(side="top")
-        canvasFrame.pack(side="top", fill="both", expand=True)
-
-        ################################################################
-        # ListView - prints method iterations
-        plotFrame = tk.Frame(canvasFrame)
-        listView = tk.Listbox(canvasFrame)
-        i = 0
-        for city in self.Cities:
-            listView.insert(i, city)
-            i += 1
-
-        ################################################################
+        self.backButtonFrame.pack(side="bottom", fill="both", expand=False)
+        self.methodButtonFrame.pack(side="bottom")
+        self.methodButtonLabel.pack(side="bottom")
+        self.optionsMenuFrame.pack(side="top")
+        self.canvasFrame.pack(side="top", fill="both", expand=True)
 
         # Page Items set frames - bottom up
-        BackBtn = ttk.Button(backButtonFrame, text="Back to start menu",
+        BackBtn = ttk.Button(self.backButtonFrame, text="Back to start menu",
                              command=lambda: controller.show_frame(StartPage))
 
-        DfsBtn = ttk.Button(methodButtonFrame, text="DFS")
-        UcsBtn = ttk.Button(methodButtonFrame, text="UCS")
-        GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy")
-        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=clickStart(self))
+        DfsBtn = ttk.Button(self.methodButtonFrame, text="DFS")
+        UcsBtn = ttk.Button(self.methodButtonFrame, text="UCS")
+        GreedyBtn = ttk.Button(self.methodButtonFrame, text="Greedy")
+        AstarBtn = ttk.Button(self.methodButtonFrame,
+                              text="A*", command=self.refreshCanvas)
 
-        methodSearchLabel = tk.Label(
-            methodButtonLabel, text="Select Search Method", font=LARGE_FONT)
+        self.methodSearchLabel = tk.Label(
+            self.methodButtonLabel, text="Select Search Method", font=LARGE_FONT)
 
-        fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
+        self.fromCityLabel = tk.Label(self.optionsMenuFrame, text="FROM")
         fromCityVar = tk.StringVar()  # default value
         fromCityOptionsMenu = ttk.OptionMenu(
-            optionsMenuFrame, fromCityVar, self.Cities[0], *self.Cities)
+            self.optionsMenuFrame, fromCityVar, self.Cities[0], *self.Cities)
 
-        toCityLabel = tk.Label(optionsMenuFrame, text="TO")
+        toCityLabel = tk.Label(self.optionsMenuFrame, text="TO")
         toCityVar = tk.StringVar()  # default value
         toCityOptionsMenu = ttk.OptionMenu(
-            optionsMenuFrame, toCityVar, self.Cities[0], *self.Cities)
-
-        '''
-        #####################TEST BUTTONS#################################
-        def ok1():
-            print("value is:" + variable1.get())
-
-        def ok2():
-            print("value is:" + variable2.get())
-
-        button1 = ttk.Button(self, text="Test City 1", command=ok1)
-        button1.pack()
-        button2 = ttk.Button(self, text="Test City 2", command=ok2)
-        button2.pack()
-        ##################################################################
-        '''
+            self.optionsMenuFrame, toCityVar, self.Cities[0], *self.Cities)
 
         # Grid setup
-        canvasFrame.grid_columnconfigure(0, weight=1)
-        canvasFrame.grid_rowconfigure(0, weight=1)
-        plotFrame.grid(row=0, column=0, sticky="nsew")
-        listView.grid(row=0, column=1, sticky="nsew")
+        self.canvasFrame.grid_columnconfigure(0, weight=1)
+        self.canvasFrame.grid_rowconfigure(0, weight=1)
+        self.plotFrame.grid(row=0, column=0, sticky="nsew")
+        self.IterationList.grid(row=0, column=1, sticky="nsew")
 
-        #Test paths
+        # Test paths
         arrayPath = []
-        #arrayPath.append(self.Portugal.pathsMap[1])
+        # arrayPath.append(self.Portugal.pathsMap[1])
 
-        canvas = FigureCanvasTkAgg(
-            ViewMap(self.Portugal, arrayPath).testGraph(), master=plotFrame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, arrayPath).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
-        optionsMenuFrame.grid_columnconfigure(0, weight=1)
+        self.optionsMenuFrame.grid_columnconfigure(0, weight=1)
         fromCityOptionsMenu.grid(row=0, column=1, sticky="w", padx=20)
         toCityOptionsMenu.grid(row=0, column=3, sticky="w")
-        fromCityLabel.grid(row=0, column=0, sticky="w")
+        self.fromCityLabel.grid(row=0, column=0, sticky="w")
+        self.fromCityLabel.grid(row=0, column=0, sticky="w")
         toCityLabel.grid(row=0, column=2, sticky="w", padx=20)
 
-        methodButtonLabel.grid_columnconfigure(0, weight=1)
-        methodButtonFrame.grid_columnconfigure(0, weight=1)
+        self.methodButtonLabel.grid_columnconfigure(0, weight=1)
+        self.methodButtonFrame.grid_columnconfigure(0, weight=1)
         DfsBtn.grid(row=0, column=0, sticky="w", pady=20)
         UcsBtn.grid(row=0, column=1, sticky="w", pady=20)
         GreedyBtn.grid(row=0, column=2, sticky="w", pady=20)
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
-        backButtonFrame.grid_columnconfigure(0, weight=1)
+        self.backButtonFrame.grid_columnconfigure(0, weight=1)
         BackBtn.grid(row=0, column=0, sticky="e", pady=20)
 
+    def refreshCanvas(self):
+        try:
+            self.canvas.get_tk_widget().pack_forget()
+        except AttributeError:
+            pass
+        # Test paths
+        arrayPath = []
+        arrayPath.append(self.Portugal.pathsMap[1])
+
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, arrayPath).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+
+        matplotlib.pyplot.close('all')
 
 
 class MapPage(tk.Frame):
@@ -203,7 +190,6 @@ class MapPage(tk.Frame):
 
 
 app = Main()
-#Test paths
 matplotlib.pyplot.close('all')
 app.lift()
 app.attributes('-topmost', True)
