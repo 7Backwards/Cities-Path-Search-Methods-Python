@@ -16,7 +16,7 @@ import tkinter as tk
 import matplotlib
 matplotlib.use("TkAgg")
 
-
+DEBUG = True
 LARGE_FONT = ("Verdana", 12)
 style.use("ggplot")
 
@@ -90,6 +90,8 @@ class StartPage(tk.Frame):
         self.data = SingletonData()
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
+        self.searchLimited = tk.BooleanVar()
+        self.searchLimited.set(False)
 
         # Setup GUI
         # Title Label
@@ -116,7 +118,7 @@ class StartPage(tk.Frame):
         optionsMenuFrame.pack(side="top")
         self.canvasFrame.pack(side="top", fill="both", expand=True)
 
-        # Page Items set frames - bottom up
+        # Page Items set frames
         fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
         self.fromCityVar = tk.StringVar()  # default value
         fromCityOptionsMenu = ttk.OptionMenu(
@@ -133,14 +135,19 @@ class StartPage(tk.Frame):
         ClearBtn = ttk.Button(backButtonFrame, text="Clear Map",
                               command=self.cleanMap)
 
+        if (DEBUG == True):
+            self.searchLimited.trace('w', lambda *_: print("The value was changed"))
+
+        CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text = "Limited search", variable = self.searchLimited, command = self.getBool)
+
         DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("DFS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, False)))
+                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("DFS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         UcsBtn = ttk.Button(methodButtonFrame,
-                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("UCS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, False)))
+                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("UCS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         GreedyBtn = ttk.Button(methodButtonFrame,
-                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("GREEDY", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, False)))
+                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("GREEDY", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         AstarBtn = ttk.Button(methodButtonFrame,
-                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("ASTAR", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, False)))
+                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("ASTAR", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
@@ -167,8 +174,13 @@ class StartPage(tk.Frame):
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
         backButtonFrame.grid_columnconfigure(0, weight=1)
-        BackBtn.grid(row=0, column=1, sticky="e", pady=20, padx=20)
-        ClearBtn.grid(row=0, column=0, sticky="e", pady=20)
+        BackBtn.grid(row=0, column=2, sticky="e", pady=20, padx=20)
+        ClearBtn.grid(row=0, column=1, sticky="e", pady=20)
+        CheckBoxLimitedSearch.grid(row=0, column=0, sticky="e", pady=20, padx=30)
+
+    def getBool(self):
+        if (DEBUG == True):
+            print(self.searchLimited.get())
 
     def cleanMap(self):
         try:
@@ -195,8 +207,9 @@ class StartPage(tk.Frame):
 
         matplotlib.pyplot.close('all')
 
-        print("From city: {} | To city: {}".format(
-            self.fromCityVar.get(), self.toCityVar.get()))
+        if (DEBUG == True):
+            print("From city: {} | To city: {}".format(
+                self.fromCityVar.get(), self.toCityVar.get()))
 
     def iterationListPopulate(self, mapIterationList):
         i = 0
