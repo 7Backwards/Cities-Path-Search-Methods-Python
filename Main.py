@@ -106,7 +106,7 @@ class StartPage(tk.Frame):
         backButtonFrame = tk.Frame(self, width=50, height=40)
         # ListView - prints method iterations
         self.plotFrame = tk.Frame(self.canvasFrame)
-        self.IterationList = tk.Listbox(self.canvasFrame, width=80)
+        self.iterationList = tk.Listbox(self.canvasFrame, width=80)
 
         # Packing Frames
         backButtonFrame.pack(side="bottom", fill="both", expand=False)
@@ -145,7 +145,7 @@ class StartPage(tk.Frame):
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
         self.canvasFrame.grid_rowconfigure(0, weight=1)
-        self.IterationList.grid(row=0, column=1, sticky="nsew")
+        self.iterationList.grid(row=0, column=1, sticky="nsew")
         self.plotFrame.grid(row=0, column=0, sticky="nsew")
         # Clean map
         self.canvas = FigureCanvasTkAgg(
@@ -173,6 +173,7 @@ class StartPage(tk.Frame):
     def cleanMap(self):
         try:
             self.canvas.get_tk_widget().pack_forget()
+            self.iterationList.delete(0, 'end')
         except AttributeError:
             pass
 
@@ -200,7 +201,7 @@ class StartPage(tk.Frame):
     def iterationListPopulate(self, mapIterationList):
         i = 0
         for item in mapIterationList:
-            self.IterationList.insert(i, item)
+            self.iterationList.insert(i, item)
             i += 1
 
 
