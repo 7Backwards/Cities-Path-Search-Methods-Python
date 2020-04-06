@@ -12,6 +12,7 @@ from SearchGraphUCS import SearchGraphUCS as UCS
 from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
 from SearchGraphASTAR import SearchGraphASTAR as ASTAR
 from tkinter import ttk
+from tkinter import messagebox
 import tkinter as tk
 import matplotlib
 matplotlib.use("TkAgg")
@@ -109,6 +110,7 @@ class StartPage(tk.Frame):
         # ListView - prints method iterations
         self.plotFrame = tk.Frame(self.canvasFrame)
         self.iterationList = tk.Listbox(self.canvasFrame, width=80)
+        self.iterationList.bind('<<ListboxSelect>>', self.listBoxOnSelect)
 
         # Packing Frames
         backButtonFrame.pack(side="bottom", fill="both", expand=False)
@@ -141,13 +143,13 @@ class StartPage(tk.Frame):
         CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text = "Limited search", variable = self.searchLimited, command = self.getBool)
 
         DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("DFS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("Depth-First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         UcsBtn = ttk.Button(methodButtonFrame,
-                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("UCS", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         GreedyBtn = ttk.Button(methodButtonFrame,
-                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("GREEDY", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         AstarBtn = ttk.Button(methodButtonFrame,
-                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("ASTAR", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
@@ -181,6 +183,14 @@ class StartPage(tk.Frame):
     def getBool(self):
         if (DEBUG == True):
             print(self.searchLimited.get())
+
+    def listBoxOnSelect(self, event):
+        # Note here that Tkinter passes an event object to onselect()
+        w = event.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        print("Selected = {} --- {}".format(index, value))
+        messagebox.showinfo("Information","Selected = {} --- {}".format(index, value))
 
     def cleanMap(self):
         try:
