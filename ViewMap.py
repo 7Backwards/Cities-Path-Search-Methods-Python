@@ -29,18 +29,15 @@ class ViewMap():
                     label='Ports', alpha=0.65, zorder=1)
 
         for i in range(0, len(x)):
-
             plt.annotate(nome[i], xy=(x[i], y[i]), size=6)
 
         # Prepare lines
         for line in self.countryMapData.getEdges():
-
             for line1 in self.pathData:
-
                 if line1.city1 == line.city1 and line1.city2 == line.city2:
 
                     self.addBlueLine(line.city1, line.city2, line.weight)
-                    continue
+                    break
 
                 self.addWhiteLine(line.city1, line.city2)
 
