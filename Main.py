@@ -4,7 +4,6 @@ from tkinter import messagebox
 import tkinter as tk
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 import matplotlib
 from SingletonData import SingletonData
 from ViewMap import ViewMap

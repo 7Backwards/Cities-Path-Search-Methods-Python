@@ -6,22 +6,30 @@ class ViewMap():
 
     countryMapData = None
     pathData = None
+    # Prepare nodes
+    nome = []
+    x = []
+    y = []
+
 
     def __init__(self, countryMapData, pathData):
 
         self.countryMapData = countryMapData
         self.pathData = pathData
+        for cols in self.countryMapData.getNodes():
+            self.nome.append(str(cols.name))
+            self.y.append(float(cols.lat))
+            self.x.append(float(cols.lon))
 
     def testGraph(self):
 
-        # Prepare nodes
-        nome = []
-        x = []
-        y = []
+       
         nome_onpath = []
         x_onpath = []
         y_onpath = []
-
+        nome_offpath = []
+        x_offpath = []
+        y_offpath = []
         
 
         # Prepare lines
@@ -32,19 +40,16 @@ class ViewMap():
                 if line1.city1 == line.city1 and line1.city2 == line.city2:
 
                     self.addBlueLine(line.city1, line.city2, line.weight)
-                    continue
+                    break
 
                 self.addWhiteLine(line.city1, line.city2)
 
         if not self.pathData:
             
-            for cols in self.countryMapData.getNodes():
-                nome.append(str(cols.name))
-                y.append(float(cols.lat))
-                x.append(float(cols.lon))
-            plt.scatter(x, y, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
-            for i in range(0, len(x)):
-                plt.annotate(nome[i], xy=(x[i], y[i] + 0.05), size=10)
+            plt.scatter(self.x, self.y, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
+            for i in range(0, len(self.x)):
+                
+                plt.annotate(self.nome[i], xy=(self.x[i] + 0.05, self.y[i] + 0.05), size=10)
         else:
                 
             for cols in self.countryMapData.getNodes():
@@ -53,17 +58,19 @@ class ViewMap():
                         nome_onpath.append(str(cols.name))
                         y_onpath.append(float(cols.lat))
                         x_onpath.append(float(cols.lon))
+                        break
                     else:
-                        nome.append(str(cols.name))
-                        y.append(float(cols.lat))
-                        x.append(float(cols.lon))
-            plt.scatter(x_onpath, y_onpath, s=20, c='w', marker='o', label='Ports', alpha=1, zorder=1)
-            plt.scatter(x, y, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
+                        nome_offpath.append(str(cols.name))
+                        y_offpath.append(float(cols.lat))
+                        x_offpath.append(float(cols.lon))
+                    
+            plt.scatter(x_offpath, y_offpath, s=20, c='w', marker='o', label='Ports', alpha=1, zorder=1)
+            plt.scatter(x_onpath, y_onpath, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
            
-            for i in range(0, len(x)):
-                plt.annotate(nome[i], xy=(x[i], y[i] + 0.05), size=10)
+            for i in range(0, len(x_offpath)):
+                plt.annotate(nome_offpath[i], xy=(x_offpath[i] + 0.05, y_offpath[i] + 0.05), size=10)
             for i in range(0, len(x_onpath)):
-                plt.annotate(nome_onpath[i], xy=(x_onpath[i], y_onpath[i] + 0.05), size=10)
+                plt.annotate(nome_onpath[i], xy=(x_onpath[i] + 0.05, y_onpath[i] + 0.05), size=10)
         
         
             
