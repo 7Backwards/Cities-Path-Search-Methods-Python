@@ -1,20 +1,19 @@
 import sys
-from matplotlib.figure import Figure
+from tkinter import ttk
+from tkinter import messagebox
+import tkinter as tk
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from CountryMap import CountryMap
-from CityNode import CityNode
-from PathEdge import PathEdge
+
+import matplotlib
 from SingletonData import SingletonData
 from ViewMap import ViewMap
 from SearchGraphDFS import SearchGraphDFS as DFS
 from SearchGraphUCS import SearchGraphUCS as UCS
 from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
 from SearchGraphASTAR import SearchGraphASTAR as ASTAR
-from tkinter import ttk
-from tkinter import messagebox
-import tkinter as tk
-import matplotlib
+
+
 matplotlib.use("TkAgg")
 
 DEBUG = True
