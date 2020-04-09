@@ -122,7 +122,7 @@ class ViewMap():
         x_values = [x[indexA], x[indexB]]
         y_values = [y[indexA], y[indexB]]
         # Set line
-        plt.plot(x_values, y_values, 'w')
+        plt.plot(x_values, y_values, 'w',linestyle='dashed', linewidth=1, markersize=12)
 
     def addBlueLine(self, cityA, cityB, weight):
 
@@ -142,6 +142,6 @@ class ViewMap():
         x_values = [x[indexA], x[indexB]]
         y_values = [y[indexA], y[indexB]]
         # Set line
-        plt.plot(x_values, y_values, 'b')
-        plt.text((x_values[0] + x_values[1]) / 2,
-                 (y_values[0] + y_values[1]) / 2, weight, color='blue')
+        plt.plot(x_values, y_values, 'b', linewidth=3)
+        plt.text(((x_values[0] + x_values[1]) / 2) + 0.05,
+                 (y_values[0] + y_values[1]) / 2, weight, color='blue', size='large')
