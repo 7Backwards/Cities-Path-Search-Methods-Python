@@ -18,29 +18,55 @@ class ViewMap():
         nome = []
         x = []
         y = []
+        nome_onpath = []
+        x_onpath = []
+        y_onpath = []
 
-        for cols in self.countryMapData.getNodes():
-
-            nome.append(str(cols.name))
-            y.append(float(cols.lat))
-            x.append(float(cols.lon))
-
-        plt.scatter(x, y, s=10, c='b', marker='o',
-                    label='Ports', alpha=0.65, zorder=1)
-
-        for i in range(0, len(x)):
-            plt.annotate(nome[i], xy=(x[i], y[i]), size=6)
+        
 
         # Prepare lines
         for line in self.countryMapData.getEdges():
+
             for line1 in self.pathData:
+
                 if line1.city1 == line.city1 and line1.city2 == line.city2:
 
                     self.addBlueLine(line.city1, line.city2, line.weight)
-                    break
+                    continue
 
                 self.addWhiteLine(line.city1, line.city2)
 
+        if not self.pathData:
+            
+            for cols in self.countryMapData.getNodes():
+                nome.append(str(cols.name))
+                y.append(float(cols.lat))
+                x.append(float(cols.lon))
+            plt.scatter(x, y, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
+            for i in range(0, len(x)):
+                plt.annotate(nome[i], xy=(x[i], y[i] + 0.05), size=10)
+        else:
+                
+            for cols in self.countryMapData.getNodes():
+                for line1 in self.pathData:
+                    if line1.city1 == cols.name or line1.city2 == cols.name:
+                        nome_onpath.append(str(cols.name))
+                        y_onpath.append(float(cols.lat))
+                        x_onpath.append(float(cols.lon))
+                    else:
+                        nome.append(str(cols.name))
+                        y.append(float(cols.lat))
+                        x.append(float(cols.lon))
+            plt.scatter(x_onpath, y_onpath, s=20, c='w', marker='o', label='Ports', alpha=1, zorder=1)
+            plt.scatter(x, y, s=20, c='b', marker='o', label='Ports', alpha=1, zorder=1)
+           
+            for i in range(0, len(x)):
+                plt.annotate(nome[i], xy=(x[i], y[i] + 0.05), size=10)
+            for i in range(0, len(x_onpath)):
+                plt.annotate(nome_onpath[i], xy=(x_onpath[i], y_onpath[i] + 0.05), size=10)
+        
+        
+            
         # Define background image
         image = plt.imread("Res/mapa_portugal.png")
 
