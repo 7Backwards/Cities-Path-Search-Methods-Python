@@ -1,18 +1,21 @@
 import sys
-from matplotlib.figure import Figure
+from tkinter import ttk
+from tkinter import messagebox
+import tkinter as tk
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from CountryMap import CountryMap
-from CityNode import CityNode
-from PathEdge import PathEdge
+import matplotlib
 from SingletonData import SingletonData
 from ViewMap import ViewMap
-from tkinter import ttk
-import tkinter as tk
-import matplotlib
+from SearchGraphDFS import SearchGraphDFS as DFS
+from SearchGraphUCS import SearchGraphUCS as UCS
+from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
+from SearchGraphASTAR import SearchGraphASTAR as ASTAR
+
+
 matplotlib.use("TkAgg")
 
-
+DEBUG = True
 LARGE_FONT = ("Verdana", 12)
 style.use("ggplot")
 
@@ -25,13 +28,16 @@ class Main(tk.Tk):
         # Get data from files
         self.data = SingletonData()
 
+        self.attributes("-fullscreen", True)
+        self.bind("<Escape>", self.end_fullscreen)
+
         if sys.platform.startswith('win'):
             tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
         tk.Tk.wm_title(self, "IA - Search Methods")
 
         container = tk.Frame(self)
-        self.geometry('{}x{}'.format(1024, 768))
+        # self.geometry('{}x{}'.format(1024, 768))
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -49,8 +55,12 @@ class Main(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+    def end_fullscreen(self, event=None):
+        self.attributes("-fullscreen", False)
+        return "break"
 
-class StartPage(tk.Frame):
+
+class SearchMethodPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -70,7 +80,7 @@ class StartPage(tk.Frame):
         button2.pack()
 
 
-class SearchMethodPage(tk.Frame):
+class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -79,6 +89,8 @@ class SearchMethodPage(tk.Frame):
         self.data = SingletonData()
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
+        self.searchLimited = tk.BooleanVar()
+        self.searchLimited.set(False)
 
         # Setup GUI
         # Title Label
@@ -95,7 +107,8 @@ class SearchMethodPage(tk.Frame):
         backButtonFrame = tk.Frame(self, width=50, height=40)
         # ListView - prints method iterations
         self.plotFrame = tk.Frame(self.canvasFrame)
-        self.IterationList = tk.Listbox(self.canvasFrame, width=80)
+        self.iterationList = tk.Listbox(self.canvasFrame, width=80)
+        self.iterationList.bind('<<ListboxSelect>>', self.listBoxOnSelect)
 
         # Packing Frames
         backButtonFrame.pack(side="bottom", fill="both", expand=False)
@@ -105,22 +118,7 @@ class SearchMethodPage(tk.Frame):
         optionsMenuFrame.pack(side="top")
         self.canvasFrame.pack(side="top", fill="both", expand=True)
 
-        # Page Items set frames - bottom up
-        BackBtn = ttk.Button(backButtonFrame, text="Back to start menu",
-                             command=lambda: controller.show_frame(StartPage))
-
-        DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=self.iterationListPopulate)
-        UcsBtn = ttk.Button(methodButtonFrame,
-                            text="UCS", command=self.refreshCanvas)
-        GreedyBtn = ttk.Button(methodButtonFrame,
-                               text="Greedy", command=self.refreshCanvas)
-        AstarBtn = ttk.Button(methodButtonFrame,
-                              text="A*", command=self.refreshCanvas)
-
-        methodSearchLabel = tk.Label(
-            methodButtonLabel, text="Select Search Method", font=LARGE_FONT)
-
+        # Page Items set frames
         fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
         self.fromCityVar = tk.StringVar()  # default value
         fromCityOptionsMenu = ttk.OptionMenu(
@@ -131,10 +129,30 @@ class SearchMethodPage(tk.Frame):
         toCityOptionsMenu = ttk.OptionMenu(
             optionsMenuFrame, self.toCityVar, self.Cities[0], *self.Cities)
 
+        BackBtn = ttk.Button(backButtonFrame, text="Exit",
+                             command=sys.exit)
+
+        ClearBtn = ttk.Button(backButtonFrame, text="Clear Map",
+                              command=self.cleanMap)
+
+        if (DEBUG == True):
+            self.searchLimited.trace('w', lambda *_: print("The value was changed"))
+
+        CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text = "Limited search", variable = self.searchLimited, command = self.getBool)
+
+        DfsBtn = ttk.Button(methodButtonFrame,
+                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("Depth-First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+        UcsBtn = ttk.Button(methodButtonFrame,
+                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+        GreedyBtn = ttk.Button(methodButtonFrame,
+                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+        AstarBtn = ttk.Button(methodButtonFrame,
+                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
         self.canvasFrame.grid_rowconfigure(0, weight=1)
-        self.IterationList.grid(row=0, column=1, sticky="nsew")
+        self.iterationList.grid(row=0, column=1, sticky="nsew")
         self.plotFrame.grid(row=0, column=0, sticky="nsew")
         # Clean map
         self.canvas = FigureCanvasTkAgg(
@@ -156,30 +174,55 @@ class SearchMethodPage(tk.Frame):
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
         backButtonFrame.grid_columnconfigure(0, weight=1)
-        BackBtn.grid(row=0, column=0, sticky="e", pady=20)
+        BackBtn.grid(row=0, column=2, sticky="e", pady=20, padx=20)
+        ClearBtn.grid(row=0, column=1, sticky="e", pady=20)
+        CheckBoxLimitedSearch.grid(row=0, column=0, sticky="e", pady=20, padx=30)
 
-    def refreshCanvas(self):
+    def getBool(self):
+        if (DEBUG == True):
+            print(self.searchLimited.get())
+
+    def listBoxOnSelect(self, event):
+        # Note here that Tkinter passes an event object to onselect()
+        w = event.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        print("Selected = {} --- {}".format(index, value))
+        messagebox.showinfo("Information","Selected = {} --- {}".format(index, value))
+
+    def cleanMap(self):
         try:
             self.canvas.get_tk_widget().pack_forget()
+            self.iterationList.delete(0, 'end')
         except AttributeError:
             pass
-        # Test paths
-        arrayPath = []
-        arrayPath.append(self.Portugal.pathsMap[1])
 
         self.canvas = FigureCanvasTkAgg(
-            ViewMap(self.Portugal, arrayPath).testGraph(), master=self.plotFrame)
+            ViewMap(self.Portugal, []).testGraph(), master=self.plotFrame)
         self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
         matplotlib.pyplot.close('all')
 
-        print("From city: {} | To city: {}".format(
-            self.fromCityVar.get(), self.toCityVar.get()))
+    def setCanvasNewMap(self, searchMethod):
+        try:
+            self.canvas.get_tk_widget().pack_forget()
+        except AttributeError:
+            pass
+        self.iterationListPopulate(searchMethod.iterationList)
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, searchMethod.selectedPath).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
-    def iterationListPopulate(self):
+        matplotlib.pyplot.close('all')
+
+        if (DEBUG == True):
+            print("From city: {} | To city: {}".format(
+                self.fromCityVar.get(), self.toCityVar.get()))
+
+    def iterationListPopulate(self, mapIterationList):
         i = 0
-        for city in self.Cities:
-            self.IterationList.insert(i, city)
+        for item in mapIterationList:
+            self.iterationList.insert(i, item)
             i += 1
 
 

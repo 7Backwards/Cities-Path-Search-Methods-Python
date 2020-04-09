@@ -7,6 +7,7 @@ class SearchGraph:
         self.destiny = destiny
         self.countryMap = countryMap
         self.selectedPath = []
+        self.iterationList = []
 
     def getSelectedPath(self):
         return self.selectedPath
