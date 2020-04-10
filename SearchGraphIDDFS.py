@@ -2,7 +2,7 @@
 from SearchGraph import SearchGraph
 
 
-class SearchGraphDFS(SearchGraph):
+class SearchGraphIDDFS(SearchGraph):
 
     def __init__(self, nameMethod, origin, destiny, countryMap, isLimited=True):
         super().__init__(nameMethod, origin, destiny, countryMap)
