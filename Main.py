@@ -7,7 +7,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
 from SingletonData import SingletonData
 from ViewMap import ViewMap
-from SearchGraphDFS import SearchGraphDFS as DFS
+from SearchGraphIDDFS import SearchGraphIDDFS as IDDFS
 from SearchGraphUCS import SearchGraphUCS as UCS
 from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
 from SearchGraphASTAR import SearchGraphASTAR as ASTAR
@@ -136,12 +136,14 @@ class StartPage(tk.Frame):
                               command=self.cleanMap)
 
         if (DEBUG == True):
-            self.searchLimited.trace('w', lambda *_: print("The value was changed"))
+            self.searchLimited.trace(
+                'w', lambda *_: print("The value was changed"))
 
-        CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text = "Limited search", variable = self.searchLimited, command = self.getBool)
+        CheckBoxLimitedSearch = ttk.Checkbutton(
+            backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
 
         DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("Depth-First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                            text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         UcsBtn = ttk.Button(methodButtonFrame,
                             text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
         GreedyBtn = ttk.Button(methodButtonFrame,
@@ -176,7 +178,8 @@ class StartPage(tk.Frame):
         backButtonFrame.grid_columnconfigure(0, weight=1)
         BackBtn.grid(row=0, column=2, sticky="e", pady=20, padx=20)
         ClearBtn.grid(row=0, column=1, sticky="e", pady=20)
-        CheckBoxLimitedSearch.grid(row=0, column=0, sticky="e", pady=20, padx=30)
+        CheckBoxLimitedSearch.grid(
+            row=0, column=0, sticky="e", pady=20, padx=30)
 
     def getBool(self):
         if (DEBUG == True):
@@ -188,7 +191,8 @@ class StartPage(tk.Frame):
         index = int(w.curselection()[0])
         value = w.get(index)
         print("Selected = {} --- {}".format(index, value))
-        messagebox.showinfo("Information","Selected = {} --- {}".format(index, value))
+        messagebox.showinfo(
+            "Information", "Selected = {} --- {}".format(index, value))
 
     def cleanMap(self):
         try:
