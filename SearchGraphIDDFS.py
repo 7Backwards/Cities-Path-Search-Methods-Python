@@ -9,6 +9,8 @@ class SearchGraphIDDFS(SearchGraph):
 		self.isLimited = isLimited
 
 		self.limit = 20 #max iteration
+		
+		self.selectedPath = []
 
 		self.graph = {}
 
@@ -17,34 +19,34 @@ class SearchGraphIDDFS(SearchGraph):
 			for path in self.countryMap.pathsMap:
 				if (path.city1 == node.name or path.city2 == node.name):
 					self.graph[node.name].append(path)
+					
+		if isLimited:
+			self.searchIDDFSLimited(self.graph[origin], origin, destiny, self.limit)
+		else:
+			self.searchIDDFSLimited(self.graph[origin], origin, destiny, self.limit)
 
-		for place in self.graph:
-			print(place)
-			for item in self.graph[place]:
-				print(item.city1 + " |  " + item.city2)
-		
-		self.searchIDDFSLimited(self.graph[origin], origin, destiny, self.limit)
 				
 				
 	def searchIDDFSLimited(self, node, origin, destiny, limit):
 		if origin == destiny:
-			print("yyyyeeeeeeaaaahhhhh")
+			print("Path equals to destiny")
 			return
 		
-		for op in node:
-			if destiny == op.city1 or destiny == op.city2:
-				print("yyyyeeeeeeaaaahhhhh")
-				return
+		if len(node) > 0:
+			for op in node:
+				if destiny == op.city1 or destiny == op.city2:
+					print("yyyyeeeeeeaaaahhhhh")
+					return
 		
-		for item in node:
-			self.searchIDDFSLimited(item, origin, destiny, limit)
+		for item in self.graph:
+			self.searchIDDFSLimited(self.graph[item], origin, destiny, limit)
 			
 			
 		'''
-		if (isLimited):
-		self.searchIDDFS
-		elif
-		self.searchDFS
+		for place in self.graph:
+			print(place)
+			for item in self.graph[place]:
+				print(item.city1 + " |  " + item.city2)
 		'''
 
 		self.selectedPath.append(self.countryMap.pathsMap[0])
