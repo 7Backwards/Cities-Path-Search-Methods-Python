@@ -1,6 +1,6 @@
 # UniformCostSearch
+import sys
 from SearchGraph import SearchGraph
-from queue import Queue, PriorityQueue
 
 
 class SearchGraphUCS(SearchGraph):
@@ -8,8 +8,28 @@ class SearchGraphUCS(SearchGraph):
     def __init__(self, nameMethod, origin, destiny, countryMap, isLimited):
         super().__init__(nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
+        self.pathList = []
         self.ucs(origin, destiny)
-
+        print(self.pathList)
+        truePath = [destiny]
+        lookForNode = destiny
+        while ( lookForNode != origin):
+            cost = sys.maxsize
+            for path in self.pathList:
+                if path[1] == lookForNode and path[0] < cost:
+                    cost = path[0]
+                    node = path[1]
+                    nodeBefore = path[2]
+                    lookForNode = nodeBefore
+            truePath.append(lookForNode)   
+        truePath.reverse()
+        i = 0
+        for i in range(0, len(truePath) - 1):
+            for pathMap in self.countryMap.getEdges():
+                if (truePath[i] == pathMap.city1 and truePath[i+1] == pathMap.city2) or (truePath[i] == pathMap.city2 and truePath[i+1] == pathMap.city1):
+                    self.selectedPath.append(pathMap)
+            i+=1 
+        print(truePath)
         # self.selectedPath.append(self.countryMap.pathsMap[0])
         # self.selectedPath.append(self.countryMap.pathsMap[6])
         # self.selectedPath.append(self.countryMap.pathsMap[8])
@@ -58,5 +78,6 @@ class SearchGraphUCS(SearchGraph):
                     if i not in visited:
                         total_cost = cost + self.get_cost(node, i)
                         queue.append((total_cost, i))
+                        self.pathList.append((total_cost, i, node))
         
 
