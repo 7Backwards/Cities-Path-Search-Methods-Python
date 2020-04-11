@@ -30,6 +30,7 @@ class SearchGraphIDDFS(SearchGraph):
             print("Path equals to destiny")
             return True
         elif limit == 0:
+            print("Fail - limit 0")
             return False
 
         for op in node:
@@ -38,7 +39,10 @@ class SearchGraphIDDFS(SearchGraph):
                 return True
 
         for item in self.graph:
-            return self.searchIDDFSLimited(self.graph[item], origin, destiny, limit-1)
+            if self.searchIDDFSLimited(self.graph[item], origin, destiny, limit-1) == True:
+                return True
+
+        return False
 
     def searchIDDFSNotLimited(self, node, origin, destiny):
         if origin == destiny:
@@ -53,4 +57,5 @@ class SearchGraphIDDFS(SearchGraph):
         for item in self.graph:
             if self.searchIDDFSLimited(self.graph[item], origin, destiny) == True:
                 return True
-            return False
+
+        return False
