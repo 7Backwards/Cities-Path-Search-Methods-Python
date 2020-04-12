@@ -142,14 +142,14 @@ class StartPage(tk.Frame):
         CheckBoxLimitedSearch = ttk.Checkbutton(
             backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
 
-        DfsBtn = ttk.Button(methodButtonFrame,
-                            text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+        IddfsBtn = ttk.Button(methodButtonFrame,
+                            text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         UcsBtn = ttk.Button(methodButtonFrame,
-                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         GreedyBtn = ttk.Button(methodButtonFrame,
-                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         AstarBtn = ttk.Button(methodButtonFrame,
-                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
@@ -170,7 +170,7 @@ class StartPage(tk.Frame):
 
         methodButtonLabel.grid_columnconfigure(0, weight=1)
         methodButtonFrame.grid_columnconfigure(0, weight=1)
-        DfsBtn.grid(row=0, column=0, sticky="w", pady=20)
+        IddfsBtn.grid(row=0, column=0, sticky="w", pady=20)
         UcsBtn.grid(row=0, column=1, sticky="w", pady=20)
         GreedyBtn.grid(row=0, column=2, sticky="w", pady=20)
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
