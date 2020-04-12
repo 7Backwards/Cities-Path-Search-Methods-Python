@@ -9,30 +9,29 @@ class SearchGraphUCS(SearchGraph):
         super().__init__(nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
         self.pathList = []
-        self.ucs(origin, destiny)
-        print(self.pathList)
-        truePath = [destiny]
-        lookForNode = destiny
-        while ( lookForNode != origin):
-            cost = sys.maxsize
-            for path in self.pathList:
-                if path[1] == lookForNode and path[0] < cost:
-                    cost = path[0]
-                    node = path[1]
-                    nodeBefore = path[2]
-                    lookForNode = nodeBefore
-            truePath.append(lookForNode)   
-        truePath.reverse()
-        i = 0
-        for i in range(0, len(truePath) - 1):
-            for pathMap in self.countryMap.getEdges():
-                if (truePath[i] == pathMap.city1 and truePath[i+1] == pathMap.city2) or (truePath[i] == pathMap.city2 and truePath[i+1] == pathMap.city1):
-                    self.selectedPath.append(pathMap)
-            i+=1 
-        print(truePath)
-        # self.selectedPath.append(self.countryMap.pathsMap[0])
-        # self.selectedPath.append(self.countryMap.pathsMap[6])
-        # self.selectedPath.append(self.countryMap.pathsMap[8])
+        self.ucs(origin, destiny,self.isLimited)
+        if len(self.pathList) > 0:
+            print(self.pathList)
+            truePath = [destiny]
+            lookForNode = destiny
+            while ( lookForNode != origin):
+                cost = sys.maxsize
+                for path in self.pathList:
+                    if path[1] == lookForNode and path[0] < cost:
+                        cost = path[0]
+                        node = path[1]
+                        nodeBefore = path[2]
+                        lookForNode = nodeBefore
+                truePath.append(lookForNode)   
+            truePath.reverse()
+            i = 0
+            for i in range(0, len(truePath) - 1):
+                for pathMap in self.countryMap.getEdges():
+                    if (truePath[i] == pathMap.city1 and truePath[i+1] == pathMap.city2) or (truePath[i] == pathMap.city2 and truePath[i+1] == pathMap.city1):
+                        self.selectedPath.append(pathMap)
+                i+=1 
+            print(truePath)
+
         
         
     def neighbors(self, node):
@@ -59,25 +58,50 @@ class SearchGraphUCS(SearchGraph):
             
         return None
 
-
-    def ucs(self, origin, destiny):
+    def checkIfDuplicates(self, listOfElems):
+        ''' Check if given list contains any duplicates '''
+        if len(listOfElems) == len(set(listOfElems)):
+            return False
+        else:
+            return True
+    
+    def ucs(self, origin, destiny, isLimited):
         visited = set()
         queue = []
         queue.append((0, origin))
         
-        while len(queue) > 0:
-            
-            self.iterationList.append(queue.copy())
-            cost, node = min(queue)
-            queue.remove(min(queue))
-            if node not in visited:
-                visited.add(node)
+        if isLimited == True:
+            while len(queue) > 0:
+                
+                self.iterationList.append(queue.copy())
+                cost, node = min(queue)
+                queue.remove(min(queue))
+                if node not in visited:
+                    visited.add(node)
+                    if node == destiny:
+                        return
+                    for i in self.neighbors(node):
+                        if i not in visited:
+                            total_cost = cost + self.get_cost(node, i)
+                            queue.append((total_cost, i))
+                            self.pathList.append((total_cost, i, node))     
+        else:
+            while len(queue) > 0:
+                if len(self.pathList) > 100:
+    
+                    self.iterationList.clear()
+                    self.iterationList.append("Loop encontrado")
+                    self.pathList.clear()
+                    return  
+                self.iterationList.append(queue.copy())
+                cost, node = min(queue)
+                queue.remove(min(queue))
                 if node == destiny:
                     return
                 for i in self.neighbors(node):
-                    if i not in visited:
-                        total_cost = cost + self.get_cost(node, i)
-                        queue.append((total_cost, i))
-                        self.pathList.append((total_cost, i, node))
-        
+                    total_cost = cost + self.get_cost(node, i)
+                    queue.append((total_cost, i))
+                    self.pathList.append((total_cost, i, node))
+                    
+              
 
