@@ -15,13 +15,20 @@ class SearchGraphUCS(SearchGraph):
             truePath = [destiny]
             lookForNode = destiny
             while ( lookForNode != origin):
-                cost = sys.maxsize
                 for path in self.pathList:
-                    if path[1] == lookForNode and path[0] < cost:
-                        cost = path[0]
+                    if lookForNode == destiny and path[1] == lookForNode:
+                        
+                        totalcost = path[0]
+                        cost = totalcost - self.get_cost(path[1],path[2])
+                        nodeBefore = path[2]
+                        lookForNode = nodeBefore
+                    elif path[1] == lookForNode and path[0] == cost:
+                        
+                        cost = cost - self.get_cost(path[1],path[2])
                         node = path[1]
                         nodeBefore = path[2]
                         lookForNode = nodeBefore
+                        break
                 truePath.append(lookForNode)   
             truePath.reverse()
             i = 0
@@ -87,7 +94,7 @@ class SearchGraphUCS(SearchGraph):
                             self.pathList.append((total_cost, i, node))     
         else:
             while len(queue) > 0:
-                if len(self.pathList) > 100:
+                if len(self.pathList) == sys.maxsize:
     
                     self.iterationList.clear()
                     self.iterationList.append("Loop encontrado")
