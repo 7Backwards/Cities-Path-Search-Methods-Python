@@ -143,7 +143,7 @@ class StartPage(tk.Frame):
             backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
 
         IddfsBtn = ttk.Button(methodButtonFrame,
-                            text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+                              text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         UcsBtn = ttk.Button(methodButtonFrame,
                             text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         GreedyBtn = ttk.Button(methodButtonFrame,
