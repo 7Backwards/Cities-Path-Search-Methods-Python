@@ -235,7 +235,6 @@ class StartPage(tk.Frame):
             self.iterationList.insert(i, item)
             i += 1
 
-
 app = Main()
 matplotlib.pyplot.close('all')
 app.lift()
