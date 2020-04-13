@@ -12,6 +12,7 @@ class SearchGraphIDDFS(SearchGraph):
         self.selectedPath = []
         self.graph = {}
         self.route = []
+        self.visited = []
 
         for node in self.countryMap.nodesMap:
             self.graph[node.name] = []
@@ -35,7 +36,7 @@ class SearchGraphIDDFS(SearchGraph):
 
         else:
             self.searchIDDFSNotLimited(
-                self.graph[origin], origin, destiny, origin, self.route)
+                self.graph[origin], origin, destiny, origin, self.route, self.visited)
             self.route.append(origin)
             self.route.reverse()
 
@@ -71,18 +72,21 @@ class SearchGraphIDDFS(SearchGraph):
 
         return False
 
-    def searchIDDFSNotLimited(self, paths, origin, destiny, currentNode, route):
+    def searchIDDFSNotLimited(self, paths, origin, destiny, currentNode, route, visited):
+
+        visited.append(currentNode)
+
         if currentNode == destiny:
             print("Arrived - " + destiny)
             return True
 
         for path in paths:
-            if path.city1 == currentNode:
-                if self.searchIDDFSNotLimited(self.graph[path.city2], origin, destiny, path.city2, route) == True:
+            if path.city1 == currentNode and path.city2 not in visited:
+                if self.searchIDDFSNotLimited(self.graph[path.city2], origin, destiny, path.city2, route, visited) == True:
                     route.append(path.city2)
                     return True
-            else:
-                if self.searchIDDFSNotLimited(self.graph[path.city1], origin, destiny, path.city1, route) == True:
+            elif path.city2 == currentNode and path.city1 not in visited:
+                if self.searchIDDFSNotLimited(self.graph[path.city1], origin, destiny, path.city1, route, visited) == True:
                     route.append(path.city1)
                     return True
 
