@@ -4,11 +4,16 @@ from SearchGraph import SearchGraph
 
 class SearchGraphIDDFS(SearchGraph):
 
-    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited=True):
+    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited=True, limitLevel=0):
         super().__init__(nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
+        self.limit = 0
 
-        self.limit = 3
+        if len(limitLevel) > 0 and len(limitLevel) < 4:
+            self.limit = int(limitLevel)
+        else:
+            self.isLimited = False
+
         self.selectedPath = []
         self.graph = {}
         self.route = []
@@ -26,7 +31,7 @@ class SearchGraphIDDFS(SearchGraph):
             for item in self.graph[place]:
                 print(item.city1 + " |  " + item.city2)
         '''
-        if isLimited:
+        if self.isLimited:
             self.searchIDDFSLimited(
                 self.graph[origin], origin, destiny, origin, self.limit, self.route)
             self.route.append(origin)
