@@ -65,12 +65,6 @@ class SearchGraphUCS(SearchGraph):
             
         return None
 
-    def checkIfDuplicates(self, listOfElems):
-        ''' Check if given list contains any duplicates '''
-        if len(listOfElems) == len(set(listOfElems)):
-            return False
-        else:
-            return True
     
     def ucs(self, origin, destiny, isLimited):
         visited = set()
@@ -100,7 +94,7 @@ class SearchGraphUCS(SearchGraph):
                     self.iterationList.append("Loop encontrado")
                     self.pathList.clear()
                     return  
-                self.iterationList.append(queue.copy())
+                self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
                 if node == destiny:
