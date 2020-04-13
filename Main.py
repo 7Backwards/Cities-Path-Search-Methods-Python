@@ -208,6 +208,7 @@ class StartPage(tk.Frame):
         matplotlib.pyplot.close('all')
 
     def setCanvasNewMap(self, searchMethod):
+        self.cleanMap()
         try:
             self.canvas.get_tk_widget().pack_forget()
         except AttributeError:
