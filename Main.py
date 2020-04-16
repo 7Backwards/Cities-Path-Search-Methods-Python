@@ -7,7 +7,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
 from SingletonData import SingletonData
 from ViewMap import ViewMap
-from SearchGraphDFS import SearchGraphDFS as DFS
+from SearchGraphIDDFS import SearchGraphIDDFS as IDDFS
 from SearchGraphUCS import SearchGraphUCS as UCS
 from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
 from SearchGraphASTAR import SearchGraphASTAR as ASTAR
@@ -121,33 +121,30 @@ class StartPage(tk.Frame):
         # Page Items set frames
         fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
         self.fromCityVar = tk.StringVar()  # default value
-        fromCityOptionsMenu = ttk.OptionMenu(
-            optionsMenuFrame, self.fromCityVar, self.Cities[0], *self.Cities)
+        fromCityOptionsMenu = ttk.OptionMenu(optionsMenuFrame, self.fromCityVar, self.Cities[0], *self.Cities)
 
         toCityLabel = tk.Label(optionsMenuFrame, text="TO")
         self.toCityVar = tk.StringVar()  # default value
-        toCityOptionsMenu = ttk.OptionMenu(
-            optionsMenuFrame, self.toCityVar, self.Cities[0], *self.Cities)
+        toCityOptionsMenu = ttk.OptionMenu(optionsMenuFrame, self.toCityVar, self.Cities[0], *self.Cities)
 
-        BackBtn = ttk.Button(backButtonFrame, text="Exit",
-                             command=sys.exit)
+        BackBtn = ttk.Button(backButtonFrame, text="Exit", command=sys.exit)
 
-        ClearBtn = ttk.Button(backButtonFrame, text="Clear Map",
-                              command=self.cleanMap)
+        ClearBtn = ttk.Button(backButtonFrame, text="Clear Map", command=self.cleanMap)
 
         if (DEBUG == True):
-            self.searchLimited.trace('w', lambda *_: print("The value was changed"))
+            self.searchLimited.trace('w', lambda *_: print("Value Changed!"))
 
-        CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text = "Limited search", variable = self.searchLimited, command = self.getBool)
+        numberCallback = (self.register(self.callbackDigit))
 
-        DfsBtn = ttk.Button(methodButtonFrame,
-                            text="DFS", command=lambda: self.setCanvasNewMap(DFS("Depth-First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
-        UcsBtn = ttk.Button(methodButtonFrame,
-                            text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
-        GreedyBtn = ttk.Button(methodButtonFrame,
-                               text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
-        AstarBtn = ttk.Button(methodButtonFrame,
-                              text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited)))
+        self.LabelInputLimitedSearch = tk.Label(backButtonFrame, text="Levels")
+        self.InputLimitedSearch = tk.Entry(backButtonFrame, state='disabled', validate='all', validatecommand=(numberCallback, '%P'))
+
+        CheckBoxLimitedSearch = ttk.Checkbutton(backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
+
+        IddfsBtn = ttk.Button(methodButtonFrame, text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.InputLimitedSearch.get())))
+        UcsBtn = ttk.Button(methodButtonFrame, text="UCS", command=lambda: self.setCanvasNewMap(UCS("Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+        GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY("Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=lambda: self.setCanvasNewMap(ASTAR("A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
@@ -155,8 +152,7 @@ class StartPage(tk.Frame):
         self.iterationList.grid(row=0, column=1, sticky="nsew")
         self.plotFrame.grid(row=0, column=0, sticky="nsew")
         # Clean map
-        self.canvas = FigureCanvasTkAgg(
-            ViewMap(self.Portugal, []).testGraph(), master=self.plotFrame)
+        self.canvas = FigureCanvasTkAgg(ViewMap(self.Portugal, []).testGraph(), master=self.plotFrame)
         self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
         optionsMenuFrame.grid_columnconfigure(0, weight=1)
@@ -168,19 +164,31 @@ class StartPage(tk.Frame):
 
         methodButtonLabel.grid_columnconfigure(0, weight=1)
         methodButtonFrame.grid_columnconfigure(0, weight=1)
-        DfsBtn.grid(row=0, column=0, sticky="w", pady=20)
+        IddfsBtn.grid(row=0, column=0, sticky="w", pady=20)
         UcsBtn.grid(row=0, column=1, sticky="w", pady=20)
         GreedyBtn.grid(row=0, column=2, sticky="w", pady=20)
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
         backButtonFrame.grid_columnconfigure(0, weight=1)
-        BackBtn.grid(row=0, column=2, sticky="e", pady=20, padx=20)
-        ClearBtn.grid(row=0, column=1, sticky="e", pady=20)
-        CheckBoxLimitedSearch.grid(row=0, column=0, sticky="e", pady=20, padx=30)
+        BackBtn.grid(row=0, column=4, sticky="e", pady=20, padx=20)
+        ClearBtn.grid(row=0, column=3, sticky="e", pady=20)
+        CheckBoxLimitedSearch.grid(row=0, column=2, sticky="e", pady=20, padx=30)
+        self.InputLimitedSearch.grid(row=0, column=1, sticky="e", pady=20)
+        self.LabelInputLimitedSearch.grid(row=0, column=0, sticky="e", pady=20)
+
+    def callbackDigit(self, P):
+        if str.isdigit(P) or P == "":
+            return True
+        else:
+            return False
 
     def getBool(self):
         if (DEBUG == True):
             print(self.searchLimited.get())
+        if self.searchLimited.get() == True:
+            self.InputLimitedSearch.config(state='normal')
+        else:
+            self.InputLimitedSearch.config(state='disabled')
 
     def listBoxOnSelect(self, event):
         # Note here that Tkinter passes an event object to onselect()
@@ -188,7 +196,8 @@ class StartPage(tk.Frame):
         index = int(w.curselection()[0])
         value = w.get(index)
         print("Selected = {} --- {}".format(index, value))
-        messagebox.showinfo("Information","Selected = {} --- {}".format(index, value))
+        messagebox.showinfo(
+            "Information", "Selected = {} --- {}".format(index, value))
 
     def cleanMap(self):
         try:
@@ -204,6 +213,7 @@ class StartPage(tk.Frame):
         matplotlib.pyplot.close('all')
 
     def setCanvasNewMap(self, searchMethod):
+        self.cleanMap()
         try:
             self.canvas.get_tk_widget().pack_forget()
         except AttributeError:
@@ -224,7 +234,6 @@ class StartPage(tk.Frame):
         for item in mapIterationList:
             self.iterationList.insert(i, item)
             i += 1
-
 
 app = Main()
 matplotlib.pyplot.close('all')
