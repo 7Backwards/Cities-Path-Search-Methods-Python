@@ -1,10 +1,10 @@
 Cidade Origem, Cidade Destino, Distancia
-Faro, Aveiro,366
-Faro, Braga,454
-Faro, Bragança,487
-Faro, Beja,99
+Faro, Aveiro,407
+Faro, Braga,504
+Faro, Bragança,541
+Faro, Beja,109
 Faro, Castelo Branco,280
-Faro, Coimbra,319
+Faro, Coimbra,356
 Faro, Évora,157
 Faro, Faro,0
 Faro, Guarda,352
@@ -17,310 +17,157 @@ Faro, Setúbal,168
 Faro, Viana do Castelo,473
 Faro, Vila Real,429
 Faro, Viseu,363
-Lisboa, Aveiro,
-Lisboa, Braga,
-Lisboa, Bragança,
-Lisboa, Beja,
-Lisboa, Castelo Branco,
-Lisboa, Coimbra,
-Lisboa, Évora,
-Lisboa, Faro,
-Lisboa, Guarda,
-Lisboa, Leiria,
-Lisboa, Lisboa,
-Lisboa, Portalegre,
-Lisboa, Porto,
-Lisboa, Santarém,
-Lisboa, Setúbal,
-Lisboa, Viana do Castelo,
-Lisboa, Vila Real,
-Lisboa, Viseu,
-Braga, Aveiro,
-Braga, Braga,
-Braga, Bragança,
-Braga, Beja,
-Braga, Castelo Branco,
-Braga, Coimbra,
-Braga, Évora,
-Braga, Faro,
-Braga, Guarda,
-Braga, Leiria,
-Braga, Lisboa,
-Braga, Portalegre,
-Braga, Porto,
-Braga, Santarém,
-Braga, Setúbal,
-Braga, Viana do Castelo,
-Braga, Vila Real,
-Braga, Viseu,
-Bragança, Aveiro,
-Bragança, Braga,
-Bragança, Bragança,
-Bragança, Beja,
-Bragança, Castelo Branco,
-Bragança, Coimbra,
-Bragança, Évora,
-Bragança, Faro,
-Bragança, Guarda,
-Bragança, Leiria,
-Bragança, Lisboa,
-Bragança, Portalegre,
-Bragança, Porto,
-Bragança, Santarém,
-Bragança, Setúbal,
-Bragança, Viana do Castelo,
-Bragança, Vila Real,
-Bragança, Viseu,
-Beja, Aveiro,
-Beja, Braga,
-Beja, Bragança,
-Beja, Beja,
-Beja, Castelo Branco,
-Beja, Coimbra,
-Beja, Évora,
-Beja, Faro,
-Beja, Guarda,
-Beja, Leiria,
-Beja, Lisboa,
-Beja, Portalegre,
-Beja, Porto,
-Beja, Santarém,
-Beja, Setúbal,
-Beja, Viana do Castelo,
-Beja, Vila Real,
-Beja, Viseu,
-Castelo Branco, Aveiro,
-Castelo Branco, Braga,
-Castelo Branco, Bragança,
-Castelo Branco, Beja,
-Castelo Branco, Castelo Branco,
-Castelo Branco, Coimbra,
-Castelo Branco, Évora,
-Castelo Branco, Faro,
-Castelo Branco, Guarda,
-Castelo Branco, Leiria,
-Castelo Branco, Lisboa,
-Castelo Branco, Portalegre,
-Castelo Branco, Porto,
-Castelo Branco, Santarém,
-Castelo Branco, Setúbal,
-Castelo Branco, Viana do Castelo,
-Castelo Branco, Vila Real,
-Castelo Branco, Viseu,
-Aveiro, Aveiro,
-Aveiro, Braga,
-Aveiro, Bragança,
-Aveiro, Beja,
-Aveiro, Castelo Branco,
-Aveiro, Coimbra,
-Aveiro, Évora,
-Aveiro, Faro,
-Aveiro, Guarda,
-Aveiro, Leiria,
-Aveiro, Lisboa,
-Aveiro, Portalegre,
-Aveiro, Porto,
-Aveiro, Santarém,
-Aveiro, Setúbal,
-Aveiro, Viana do Castelo,
-Aveiro, Vila Real,
-Aveiro, Viseu,
-Coimbra, Aveiro,
-Coimbra, Braga,
-Coimbra, Bragança,
-Coimbra, Beja,
-Coimbra, Castelo Branco,
-Coimbra, Coimbra,
-Coimbra, Évora,
-Coimbra, Faro,
-Coimbra, Guarda,
-Coimbra, Leiria,
-Coimbra, Lisboa,
-Coimbra, Portalegre,
-Coimbra, Porto,
-Coimbra, Santarém,
-Coimbra, Setúbal,
-Coimbra, Viana do Castelo,
-Coimbra, Vila Real,
-Coimbra, Viseu,
+Lisboa, Aveiro,217
+Lisboa, Braga,320
+Lisboa, Bragança,398
+Lisboa, Beja,135
+Lisboa, Castelo Branco,186
+Lisboa, Coimbra,176
+Lisboa, Évora,107
+Lisboa, Guarda,257
+Lisboa, Leiria,116
+Lisboa, Lisboa,0
+Lisboa, Portalegre,160
+Lisboa, Porto,274
+Lisboa, Santarém,70
+Lisboa, Setúbal,30
+Lisboa, Viana do Castelo,330
+Lisboa, Vila Real,310
+Lisboa, Viseu,240
+Braga, Aveiro,102
+Braga, Braga,0
+Braga, Bragança,100
+Braga, Beja,395
+Braga, Castelo Branco,204
+Braga, Coimbra,149
+Braga, Évora,334
+Braga, Guarda,148
+Braga, Leiria,202
+Braga, Portalegre,264
+Braga, Porto,47
+Braga, Santarém,257
+Braga, Setúbal,337
+Braga, Viana do Castelo,37
+Braga, Vila Real,64
+Braga, Viseu,107
+Bragança, Aveiro,204
+Bragança, Bragança,0
+Bragança, Beja,430
+Bragança, Castelo Branco,227
+Bragança, Coimbra,225
+Bragança, Évora,372
+Bragança, Guarda,146
+Bragança, Leiria,286
+Bragança, Portalegre,284
+Bragança, Porto,171
+Bragança, Santarém,328
+Bragança, Setúbal,407
+Bragança, Viana do Castelo,172
+Bragança, Vila Real,100
+Bragança, Viseu,160
+Beja, Aveiro,300
+Beja, Beja,0
+Beja, Castelo Branco,205
+Beja, Coimbra,248
+Beja, Évora,62
+Beja, Guarda,284
+Beja, Leiria,210
+Beja, Portalegre,147
+Beja, Porto,355
+Beja, Santarém,153
+Beja, Setúbal,106
+Beja, Viana do Castelo,416
+Beja, Vila Real,365
+Beja, Viseu,293
+Castelo Branco, Aveiro,133
+Castelo Branco, Castelo Branco,0
+Castelo Branco, Coimbra,90
+Castelo Branco, Évora,143
+Castelo Branco, Guarda,82
+Castelo Branco, Leiria,113
+Castelo Branco, Portalegre,58
+Castelo Branco, Porto,177
+Castelo Branco, Santarém,120
+Castelo Branco, Setúbal,188
+Castelo Branco, Viana do Castelo,237
+Castelo Branco, Vila Real,165
+Castelo Branco, Viseu,99
+Aveiro, Aveiro,0
+Aveiro, Coimbra,52
+Aveiro, Évora,237
+Aveiro, Guarda,117
+Aveiro, Leiria,100
+Aveiro, Portalegre,181
+Aveiro, Porto,58
+Aveiro, Santarém,156
+Aveiro, Setúbal,236
+Aveiro, Viana do Castelo,118
+Aveiro, Vila Real,105
+Aveiro, Viseu,61
+Coimbra, Coimbra,0
+Coimbra, Évora,185
+Coimbra, Guarda,103
+Coimbra, Leiria,60
+Coimbra, Portalegre,130
+Coimbra, Porto,108
+Coimbra, Santarém,109
+Coimbra, Setúbal,190
+Coimbra, Viana do Castelo,170
+Coimbra, Vila Real,135
+Coimbra, Viseu,65
+Évora, Évora,0
+Évora, Guarda,225
+Évora, Leiria,150
+Évora, Portalegre,90
+Évora, Porto,294
+Évora, Santarém,99
+Évora, Setúbal,85
+Évora, Viana do Castelo,355
+Évora, Vila Real,303
+Évora, Viseu,230
+Guarda, Guarda,0
+Guarda, Leiria,158
+Guarda, Portalegre,141
+Guarda, Porto,134
+Guarda, Santarém,190
+Guarda, Setúbal,265
+Guarda, Viana do Castelo,185
+Guarda, Vila Real,93
+Guarda, Viseu,56
+Leiria, Leiria,0
+Leiria, Portalegre,130
+Leiria, Porto,158
+Leiria, Santarém,57
+Leiria, Setúbal,135
+Leiria, Viana do Castelo,215
+Leiria, Vila Real,194
+Leiria, Viseu,125
+Portalegre, Portalegre,0
+Portalegre, Porto,230
+Portalegre, Santarém,108
+Portalegre, Setúbal,152
+Portalegre, Viana do Castelo,290
+Portalegre, Vila Real,223
+Portalegre, Viseu,156
+Porto, Porto,0
+Porto, Santarém,212
+Porto, Setúbal,293
+Porto, Viana do Castelo,62
+Porto, Vila Real,76
+Porto, Viseu,81
+Santarém, Santarém,0
+Santarém, Setúbal,80
+Santarém, Viana do Castelo,272
+Santarém, Vila Real,242
+Santarém, Viseu,170
+Setúbal, Setúbal,0
+Setúbal, Viana do Castelo,351
+Setúbal, Vila Real,324
+Setúbal, Viseu,251
+Viana do Castelo, Viana do Castelo,0
+Viana do Castelo, Vila Real,100
+Viana do Castelo, Viseu,138
+Vila Real, Vila Real,0
+Vila Real, Viseu,72
+Viseu,Viseu,0
 
-Évora, Aveiro,
-Évora, Braga,
-Évora, Bragança,
-Évora, Beja,
-Évora, Castelo Branco,
-Évora, Coimbra,
-Évora, Évora,
-Évora, Faro,
-Évora, Guarda,
-Évora, Leiria,
-Évora, Lisboa,
-Évora, Portalegre,
-Évora, Porto,
-Évora, Santarém,
-Évora, Setúbal,
-Évora, Viana do Castelo,
-Évora, Vila Real,
-Évora, Viseu,
-Guarda, Aveiro,
-Guarda, Braga,
-Guarda, Bragança,
-Guarda, Beja,
-Guarda, Castelo Branco,
-Guarda, Coimbra,
-Guarda, Évora,
-Guarda, Faro,
-Guarda, Guarda,
-Guarda, Leiria,
-Guarda, Lisboa,
-Guarda, Portalegre,
-Guarda, Porto,
-Guarda, Santarém,
-Guarda, Setúbal,
-Guarda, Viana do Castelo,
-Guarda, Vila Real,
-Guarda, Viseu,
-Leiria, Aveiro,
-Leiria, Braga,
-Leiria, Bragança,
-Leiria, Beja,
-Leiria, Castelo Branco,
-Leiria, Coimbra,
-Leiria, Évora,
-Leiria, Faro,
-Leiria, Guarda,
-Leiria, Leiria,
-Leiria, Lisboa,
-Leiria, Portalegre,
-Leiria, Porto,
-Leiria, Santarém,
-Leiria, Setúbal,
-Leiria, Viana do Castelo,
-Leiria, Vila Real,
-Leiria, Viseu,
-Portalegre, Aveiro,
-Portalegre, Braga,
-Portalegre, Bragança,
-Portalegre, Beja,
-Portalegre, Castelo Branco,
-Portalegre, Coimbra,
-Portalegre, Évora,
-Portalegre, Faro,
-Portalegre, Guarda,
-Portalegre, Leiria,
-Portalegre, Lisboa,
-Portalegre, Portalegre,
-Portalegre, Porto,
-Portalegre, Santarém,
-Portalegre, Setúbal,
-Portalegre, Viana do Castelo,
-Portalegre, Vila Real,
-Portalegre, Viseu,
-Porto, Aveiro,
-Porto, Braga,
-Porto, Bragança,
-Porto, Beja,
-Porto, Castelo Branco,
-Porto, Coimbra,
-Porto, Évora,
-Porto, Faro,
-Porto, Guarda,
-Porto, Leiria,
-Porto, Lisboa,
-Porto, Portalegre,
-Porto, Porto,
-Porto, Santarém,
-Porto, Setúbal,
-Porto, Viana do Castelo,
-Porto, Vila Real,
-Porto, Viseu,
-Santarém, Aveiro,
-Santarém, Braga,
-Santarém, Bragança,
-Santarém, Beja,
-Santarém, Castelo Branco,
-Santarém, Coimbra,
-Santarém, Évora,
-Santarém, Faro,
-Santarém, Guarda,
-Santarém, Leiria,
-Santarém, Lisboa,
-Santarém, Portalegre,
-Santarém, Santarém,
-Santarém, Porto,
-Santarém, Setúbal,
-Santarém, Viana do Castelo,
-Santarém, Vila Real,
-Santarém, Viseu,
-Setúbal, Aveiro,
-Setúbal, Braga,
-Setúbal, Bragança,
-Setúbal, Beja,
-Setúbal, Castelo Branco,
-Setúbal, Coimbra,
-Setúbal, Évora,
-Setúbal, Faro,
-Setúbal, Guarda,
-Setúbal, Leiria,
-Setúbal, Lisboa,
-Setúbal, Portalegre,
-Setúbal, Porto,
-Setúbal, Santarém,
-Setúbal, Setúbal,
-Setúbal, Viana do Castelo,
-Setúbal, Vila Real,
-Setúbal, Viseu,
-Viana do Castelo, Aveiro,
-Viana do Castelo, Braga,
-Viana do Castelo, Bragança,
-Viana do Castelo, Beja,
-Viana do Castelo, Castelo Branco,
-Viana do Castelo, Coimbra,
-Viana do Castelo, Évora,
-Viana do Castelo, Faro,
-Viana do Castelo, Guarda,
-Viana do Castelo, Leiria,
-Viana do Castelo, Lisboa,
-Viana do Castelo, Portalegre,
-Viana do Castelo, Porto,
-Viana do Castelo, Santarém,
-Viana do Castelo, Setúbal,
-Viana do Castelo, Viana do Castelo,
-Viana do Castelo, Vila Real,
-Viana do Castelo, Viseu,
-Vila Real, Aveiro,
-Vila Real, Braga,
-Vila Real, Bragança,
-Vila Real, Beja,
-Vila Real, Castelo Branco,
-Vila Real, Coimbra,
-Vila Real, Évora,
-Vila Real, Faro,
-Vila Real, Guarda,
-Vila Real, Leiria,
-Vila Real, Lisboa,
-Vila Real, Portalegre,
-Vila Real, Porto,
-Vila Real, Santarém,
-Vila Real, Setúbal,
-Vila Real, Viana do Castelo,
-Vila Real, Vila Real,
-Vila Real, Viseu,
-Viseu, Aveiro,
-Viseu, Braga,
-Viseu, Bragança,
-Viseu, Beja,
-Viseu, Castelo Branco,
-Viseu, Coimbra,
-Viseu, Évora,
-Viseu, Faro,
-Viseu, Guarda,
-Viseu, Leiria,
-Viseu, Lisboa,
-Viseu, Portalegre,
-Viseu, Porto,
-Viseu, Santarém,
-Viseu, Setúbal,
-Viseu, Viana do Castelo,
-Viseu, Vila Real,
-Viseu, Viseu,
