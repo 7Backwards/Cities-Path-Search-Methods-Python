@@ -50,7 +50,9 @@ class SingletonData:
                     tempPath = PathEdge(cols[0], cols[1], cols[2])
                     cls.mapDirectDistances.append(tempPath)
 
+            '''
             for item in cls.mapDirectDistances:
                 print(item.city1 + "|" + item.city2 + "|" + item.weight)
+            '''
 
         return cls._instance
