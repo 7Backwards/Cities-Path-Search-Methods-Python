@@ -18,6 +18,7 @@ class SearchGraphIDDFS(SearchGraph):
         self.graph = {}
         self.route = []
         self.visited = []
+        self.tries = 0
 
         for node in self.countryMap.nodesMap:
             self.graph[node.name] = []
@@ -53,7 +54,17 @@ class SearchGraphIDDFS(SearchGraph):
             count = count + 1
 
         for city in self.route:
-            self.iterationList.append(city)
+            iterationSrt = "[" + city + "]"
+            for path in self.countryMap.pathsMap:
+                if path.city1 == city:
+                    iterationSrt = iterationSrt + ", " + path.city2
+                elif path.city2 == city:
+                    iterationSrt = iterationSrt + ", " + path.city1
+
+            iterationSrt = iterationSrt + "]"
+            self.iterationList.append(iterationSrt)
+
+        self.iterationList.append("Total tries = " + str(self.tries))
 
     def searchIDDFSLimited(self, paths, origin, destiny, currentNode, limit, route):
 
@@ -62,6 +73,7 @@ class SearchGraphIDDFS(SearchGraph):
             return True
         elif limit == 0:
             print("Limit reached!!!")
+            self.tries += 1
             route.clear()
             return False
 
@@ -95,4 +107,5 @@ class SearchGraphIDDFS(SearchGraph):
                     route.append(path.city1)
                     return True
 
+        self.tries += 1
         return False
