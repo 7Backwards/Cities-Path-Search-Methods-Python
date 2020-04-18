@@ -12,8 +12,7 @@ class SearchGraphASTAR(SearchGraph):
         self.selectedPath = []
         self.graph = {}
         self.route = []
-        self.visited = []
-        self.tries = 0
+        self.currentDistance = 0
 
         for node in self.countryMap.nodesMap:
             self.graph[node.name] = []
@@ -65,6 +64,7 @@ class SearchGraphASTAR(SearchGraph):
         if len(minDirectDistanceToDestiny) > 0:
             nextNode = self.getMinDirectDistanceToDestiny(minDirectDistanceToDestiny)
             print(nextNode)
+            print(minDirectDistanceToDestiny)
             if self.searchAstar(self.graph[nextNode], origin, destiny, nextNode, route) == True:
                 route.append(nextNode)
                 return True
@@ -74,7 +74,12 @@ class SearchGraphASTAR(SearchGraph):
 
     def getMinDirectDistanceToDestiny(self, minDirectDistanceToDestiny):
 
-        minval = min(minDirectDistanceToDestiny.values())
-        res = [k for k, v in minDirectDistanceToDestiny.items() if v == minval]
+        minWeight = 100000
+        nextCity = ""
 
-        return res[0];
+        for city, weight in minDirectDistanceToDestiny.items():
+            if int(weight) < minWeight:
+                minWeight = int(weight)
+                nextCity = city
+
+        return nextCity;
