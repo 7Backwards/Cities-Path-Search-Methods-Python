@@ -89,6 +89,7 @@ class StartPage(tk.Frame):
         self.data = SingletonData()
         self.Portugal = self.data.Map
         self.Cities = self.data.mapCities
+        self.directDistancePaths = self.data.mapDirectDistances
         self.searchLimited = tk.BooleanVar()
         self.searchLimited.set(False)
 
@@ -106,8 +107,8 @@ class StartPage(tk.Frame):
         # Back button Frame
         backButtonFrame = tk.Frame(self, width=50, height=40)
         # ListView - prints method iterations
-        self.plotFrame = tk.Frame(self.canvasFrame)
-        self.iterationList = tk.Listbox(self.canvasFrame, width=150)
+        self.plotFrame = tk.Frame(self.canvasFrame, width=100)
+        self.iterationList = tk.Listbox(self.canvasFrame, width=100)
         self.iterationList.bind('<<ListboxSelect>>', self.listBoxOnSelect)
 
         # Packing Frames
@@ -153,7 +154,7 @@ class StartPage(tk.Frame):
         GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY(
             "Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
         AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=lambda: self.setCanvasNewMap(ASTAR(
-            "A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+            "A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
