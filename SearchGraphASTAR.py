@@ -12,20 +12,14 @@ class SearchGraphASTAR(SearchGraph):
         self.selectedPath = []
         self.graph = {}
         self.route = []
-        self.currentDistance = 0
+        self.minDirectDistanceToDestiny = {}
+        self.minDirectDistanceToDestiny[origin] = "0"
 
         for node in self.countryMap.nodesMap:
             self.graph[node.name] = []
             for path in self.countryMap.pathsMap:
                 if path.city1 == node.name or path.city2 == node.name:
                     self.graph[node.name].append(path)
-        '''
-        #Print all paths
-        for place in self.graph:
-            print(place)
-            for item in self.graph[place]:
-                print(item.city1 + " |  " + item.city2)
-        '''
 
         self.searchAstar(self.graph[origin], origin,
                          destiny, origin, self.route)
@@ -46,26 +40,27 @@ class SearchGraphASTAR(SearchGraph):
             print("Arrived - " + destiny)
             return True
 
-        minDirectDistanceToDestiny = {}
         for path in paths:
             if path.city1 == currentNode:
                 for directPath in self.directDistancePaths:
                     if directPath.city1 == path.city2 and directPath.city2 == destiny:
-                        minDirectDistanceToDestiny[directPath.city1] = directPath.weight
+                        self.minDirectDistanceToDestiny[directPath.city1] = directPath.weight
                     elif directPath.city2 == path.city2 and directPath.city1 == destiny:
-                        minDirectDistanceToDestiny[directPath.city2] = directPath.weight
+                        self.minDirectDistanceToDestiny[directPath.city2] = directPath.weight
             elif path.city2 == currentNode:
                 for directPath in self.directDistancePaths:
                     if directPath.city1 == path.city1 and directPath.city2 == destiny:
-                        minDirectDistanceToDestiny[directPath.city1] = directPath.weight
+                        self.minDirectDistanceToDestiny[directPath.city1] = directPath.weight
                     elif directPath.city2 == path.city1 and directPath.city1 == destiny:
-                        minDirectDistanceToDestiny[directPath.city2] = directPath.weight
+                        self.minDirectDistanceToDestiny[directPath.city2] = directPath.weight
 
-        if len(minDirectDistanceToDestiny) > 0:
+        if len(self.minDirectDistanceToDestiny) > 0:
+            self.minDirectDistanceToDestiny.pop(currentNode)
             nextNode = self.getMinDirectDistanceToDestiny(
-                minDirectDistanceToDestiny)
-            print(nextNode)
-            print(minDirectDistanceToDestiny)
+                self.minDirectDistanceToDestiny)
+            print(self.minDirectDistanceToDestiny)
+            # print(nextNode)
+            # print(self.minDirectDistanceToDestiny)
             if self.searchAstar(self.graph[nextNode], origin, destiny, nextNode, route) == True:
                 route.append(nextNode)
                 return True
@@ -95,7 +90,7 @@ class SearchGraphASTAR(SearchGraph):
         # sorts the array in ascending according to
         # second element
         nextHopCandidateList.sort(key=self.sortSecond)
-        self.iterationList.append(nextHopCandidateList)
+        self.iterationList.append(str(nextHopCandidateList))
         print(nextHopCandidateList)
 
         return nextCity
