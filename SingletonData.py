@@ -13,7 +13,7 @@ class SingletonData:
             cls._instance = super(SingletonData, cls).__new__(cls)
             cls.Map = CountryMap("Mapa de Portugal")
             cls.mapCities = []
-            cls.distToFaro = {}
+            cls.mapDirectDistances = []
 
             # Read csv
             with open('Res/pt.csv', 'r', newline='', encoding='utf-8') as f_input:
@@ -37,14 +37,22 @@ class SingletonData:
                     cls.Map.addPath(tempPath)
             # cls.Map.printPaths()
 
-            with open('Res/dist2Faro.csv', 'r', newline='', encoding='utf-8') as f_input:
+            with open('Res/directDistanceBetweenCities.csv', 'r', newline='', encoding='utf-8') as f_input:
                 csv_input = csv.reader(
                     f_input, delimiter=',', skipinitialspace=True)
                 # ByPass header line
                 next(csv_input, None)
 
                 for cols in csv_input:
-                    cls.mapCities.append(cols[0])
-                    cls.distToFaro[cols[0]] = cols[1]
-                # print(cls.distToFaro)
+                    if cols[1] not in cls.mapCities:
+                        cls.mapCities.append(cols[1])
+
+                    tempPath = PathEdge(cols[0], cols[1], cols[2])
+                    cls.mapDirectDistances.append(tempPath)
+
+            '''
+            for item in cls.mapDirectDistances:
+                print(item.city1 + "|" + item.city2 + "|" + item.weight)
+            '''
+
         return cls._instance
