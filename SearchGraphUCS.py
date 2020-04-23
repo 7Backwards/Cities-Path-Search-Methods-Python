@@ -74,7 +74,7 @@ class SearchGraphUCS(SearchGraph):
         if isLimited == True:
             while len(queue) > 0:
                 
-                self.iterationList.append(queue.copy())
+                self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
                 if node not in visited:
