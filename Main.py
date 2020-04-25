@@ -1,12 +1,23 @@
-from tkinter import ttk
-import csv
-import tkinter as tk
 import sys
-import matplotlib.pyplot as plt
-plt.ion()
+from tkinter import ttk
+from tkinter import messagebox
+import tkinter as tk
+from matplotlib import style
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib
+from SingletonData import SingletonData
+from ViewMap import ViewMap
+from SearchGraphIDDFS import SearchGraphIDDFS as IDDFS
+from SearchGraphUCS import SearchGraphUCS as UCS
+from SearchGraphGREEDY import SearchGraphGREEDY as GREEDY
+from SearchGraphASTAR import SearchGraphASTAR as ASTAR
 
 
+matplotlib.use("TkAgg")
+
+DEBUG = True
 LARGE_FONT = ("Verdana", 12)
+style.use("ggplot")
 
 
 class Main(tk.Tk):
@@ -14,19 +25,26 @@ class Main(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
 
+        # Get data from files
+        self.data = SingletonData()
+
+        self.attributes("-fullscreen", True)
+        self.bind("<Escape>", self.end_fullscreen)
+
         if sys.platform.startswith('win'):
-            tk.Tk.iconbitmap(self, default='favicon.ico')
+            tk.Tk.iconbitmap(self, default='Res/favicon.ico')
 
         tk.Tk.wm_title(self, "IA - Search Methods")
 
         container = tk.Frame(self)
+        # self.geometry('{}x{}'.format(1024, 768))
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
 
-        for F in (StartPage, OptionsPage, MapPage):
+        for F in (StartPage, SearchMethodPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -37,100 +55,202 @@ class Main(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+    def end_fullscreen(self, event=None):
+        self.attributes("-fullscreen", False)
+        return "break"
+
+
+class SearchMethodPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(
+            self, text="Map Search Methods - 2020", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        self.Portugal = SingletonData().Map
+
+        button1 = ttk.Button(self, text="View Map",
+                             command=lambda: ViewMap(self.Portugal, []).testGraph())
+
+        button1.pack()
+
+        button2 = ttk.Button(self, text="Search Methods",
+                             command=lambda: controller.show_frame(SearchMethodPage))
+        button2.pack()
+
 
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
 
-        button1 = ttk.Button(self, text="Options",
-                             command=lambda: controller.show_frame(OptionsPage))
-        button1.pack()
+        # Get data
+        self.data = SingletonData()
+        self.Portugal = self.data.Map
+        self.Cities = self.data.mapCities
+        self.directDistancePaths = self.data.mapDirectDistances
+        self.searchLimited = tk.BooleanVar()
+        self.searchLimited.set(False)
 
-        button2 = ttk.Button(self, text="Map",
-                             command=lambda: controller.show_frame(MapPage))
-        button2.pack()
+        # Setup GUI
+        # Title Label
+        labelFrame = tk.Label(self, text="Select Cities", font=LARGE_FONT)
+        # OptionMenu Frame
+        optionsMenuFrame = tk.Frame(self)
+        # White canvas Frame
+        self.canvasFrame = tk.Canvas(self, background="white")
+        # Method Selector Label
+        methodButtonLabel = tk.Label(self, text="Select Search Method")
+        # Method Selector Frame
+        methodButtonFrame = tk.Frame(self, width=50, height=20)
+        # Back button Frame
+        backButtonFrame = tk.Frame(self, width=50, height=40)
+        # ListView - prints method iterations
+        self.plotFrame = tk.Frame(self.canvasFrame, width=100)
+        self.iterationList = tk.Listbox(self.canvasFrame, width=100)
+        self.iterationList.bind('<<ListboxSelect>>', self.listBoxOnSelect)
 
+        # Packing Frames
+        backButtonFrame.pack(side="bottom", fill="both", expand=False)
+        methodButtonFrame.pack(side="bottom")
+        methodButtonLabel.pack(side="bottom")
+        labelFrame.pack(side="top")
+        optionsMenuFrame.pack(side="top")
+        self.canvasFrame.pack(side="top", fill="both", expand=True)
 
-class OptionsPage(tk.Frame):
+        # Page Items set frames
+        fromCityLabel = tk.Label(optionsMenuFrame, text="FROM")
+        self.fromCityVar = tk.StringVar()  # default value
+        fromCityOptionsMenu = ttk.OptionMenu(
+            optionsMenuFrame, self.fromCityVar, self.Cities[0], *self.Cities)
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Options Page", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+        toCityLabel = tk.Label(optionsMenuFrame, text="TO")
+        self.toCityVar = tk.StringVar()  # default value
+        toCityOptionsMenu = ttk.OptionMenu(
+            optionsMenuFrame, self.toCityVar, self.Cities[0], *self.Cities)
 
-        button1 = ttk.Button(self, text="Back to start menu",
-                             command=lambda: controller.show_frame(StartPage))
-        button1.pack()
+        BackBtn = ttk.Button(backButtonFrame, text="Exit", command=sys.exit)
 
+        ClearBtn = ttk.Button(
+            backButtonFrame, text="Clear Map", command=self.cleanMap)
 
-def testGraph():
+        if (DEBUG == True):
+            self.searchLimited.trace('w', lambda *_: print("Value Changed!"))
 
-    # Read csv
-    with open('pt.csv', 'r', newline='', encoding='utf-8') as f_input:
-        csv_input = csv.reader(f_input, delimiter=',')
-        # ByPass header line
-        next(csv_input, None)
-        nome = []
-        x = []
-        y = []
-        for cols in csv_input:
-            nome.append(str(cols[0]))
-            y.append(float(cols[1]))
-            x.append(float(cols[2]))
+        numberCallback = (self.register(self.callbackDigit))
 
-    plt.scatter(x, y, s=10, c='b', marker='o',
-                label='Ports', alpha=0.65, zorder=1)
-    for i in range(0, len(x)):
-        plt.annotate(nome[i], xy=(x[i], y[i]), size=6)
+        self.LabelInputLimitedSearch = tk.Label(backButtonFrame, text="Levels")
+        self.InputLimitedSearch = tk.Entry(
+            backButtonFrame, state='disabled', validate='all', validatecommand=(numberCallback, '%P'))
 
-    # Define lines
-    x_values = [x[0], x[5]]
-    y_values = [y[0], y[5]]
-    # Set line
-    plt.plot(x_values, y_values)
+        CheckBoxLimitedSearch = ttk.Checkbutton(
+            backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
 
-    # Define background image
-    image = plt.imread("mapa_portugal.png")
-    # Define background image x and y axis range
-    ext = [-9.8, -6, 36.8, 42.2]
-    plt.imshow(image, zorder=0, extent=ext)
-    aspect = image.shape[0]/float(image.shape[1]) * \
-        ((ext[1]-ext[0])/(ext[3]-ext[2]))
-    plt.gca().set_aspect(aspect)
+        IddfsBtn = ttk.Button(methodButtonFrame, text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search",
+                                                                                                          self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.InputLimitedSearch.get())))
+        UcsBtn = ttk.Button(methodButtonFrame, text="UCS", command=lambda: self.setCanvasNewMap(UCS(
+            "Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+        GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY(
+            "Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
+        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=lambda: self.setCanvasNewMap(ASTAR(
+            "A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
 
-    # Set x axis range
-    plt.xlim(-9.8, -6)
-    # Set y axis range
-    plt.ylim(36.8, 42.2)
-    # Hide x axis values
-    plt.xticks([])
-    # Hide y axis values
-    plt.yticks([])
-    # giving a title to my graph
-    plt.title('Cidades de Portugal')
+        # Grid setup
+        self.canvasFrame.grid_columnconfigure(0, weight=1)
+        self.canvasFrame.grid_rowconfigure(0, weight=1)
+        self.iterationList.grid(row=0, column=1, sticky="nsew")
+        self.plotFrame.grid(row=0, column=0, sticky="nsew")
+        # Clean map
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, []).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
-    # function to show the plot
-    plt.show()
+        optionsMenuFrame.grid_columnconfigure(0, weight=1)
+        fromCityOptionsMenu.grid(row=0, column=1, sticky="w", padx=20)
+        toCityOptionsMenu.grid(row=0, column=3, sticky="w")
+        fromCityLabel.grid(row=0, column=0, sticky="w")
+        fromCityLabel.grid(row=0, column=0, sticky="w")
+        toCityLabel.grid(row=0, column=2, sticky="w", padx=20)
 
+        methodButtonLabel.grid_columnconfigure(0, weight=1)
+        methodButtonFrame.grid_columnconfigure(0, weight=1)
+        IddfsBtn.grid(row=0, column=0, sticky="w", pady=20)
+        UcsBtn.grid(row=0, column=1, sticky="w", pady=20)
+        GreedyBtn.grid(row=0, column=2, sticky="w", pady=20)
+        AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
-class MapPage(tk.Frame):
+        backButtonFrame.grid_columnconfigure(0, weight=1)
+        BackBtn.grid(row=0, column=4, sticky="e", pady=20, padx=20)
+        ClearBtn.grid(row=0, column=3, sticky="e", pady=20)
+        CheckBoxLimitedSearch.grid(
+            row=0, column=2, sticky="e", pady=20, padx=30)
+        self.InputLimitedSearch.grid(row=0, column=1, sticky="e", pady=20)
+        self.LabelInputLimitedSearch.grid(row=0, column=0, sticky="e", pady=20)
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Map Page", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+    def callbackDigit(self, P):
+        if str.isdigit(P) or P == "":
+            return True
+        else:
+            return False
 
-        button1 = ttk.Button(self, text="Back to start menu",
-                             command=lambda: controller.show_frame(StartPage))
-        button1.pack()
+    def getBool(self):
+        if (DEBUG == True):
+            print(self.searchLimited.get())
+        if self.searchLimited.get() == True:
+            self.InputLimitedSearch.config(state='normal')
+        else:
+            self.InputLimitedSearch.config(state='disabled')
 
-        button2 = ttk.Button(self, text="test graph",
-                             command=lambda: testGraph())
-        button2.pack()
+    def listBoxOnSelect(self, event):
+        # Tkinter passes an event object to onselect()
+        w = event.widget
+        index = int(w.curselection()[0])
+        value = w.get(index)
+        print("Selected = {} --- {}".format(index, value))
+        messagebox.showinfo(
+            "Information", "Selected = {} --- {}".format(index, value))
+
+    def cleanMap(self):
+        try:
+            self.canvas.get_tk_widget().pack_forget()
+            self.iterationList.delete(0, 'end')
+        except AttributeError:
+            pass
+
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, []).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+
+        matplotlib.pyplot.close('all')
+
+    def setCanvasNewMap(self, searchMethod):
+        self.cleanMap()
+        try:
+            self.canvas.get_tk_widget().pack_forget()
+        except AttributeError:
+            pass
+        self.iterationListPopulate(searchMethod.iterationList)
+        self.canvas = FigureCanvasTkAgg(
+            ViewMap(self.Portugal, searchMethod.selectedPath).testGraph(), master=self.plotFrame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+
+        matplotlib.pyplot.close('all')
+
+        if (DEBUG == True):
+            print("From city: {} | To city: {}".format(
+                self.fromCityVar.get(), self.toCityVar.get()))
+
+    def iterationListPopulate(self, mapIterationList):
+        i = 0
+        for item in mapIterationList:
+            self.iterationList.insert(i, item)
+            i += 1
 
 
 app = Main()
+matplotlib.pyplot.close('all')
+app.lift()
+app.attributes('-topmost', True)
+app.after_idle(app.attributes, '-topmost', False)
 app.mainloop()

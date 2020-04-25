@@ -1,0 +1,172 @@
+Cidade Origem,Cidade Destino,Distancia
+Faro,Aveiro,366
+Faro,Braga,454
+Faro,Bragança,487
+Faro,Beja,99
+Faro,Castelo Branco,280
+Faro,Coimbra,319
+Faro,Évora,157
+Faro,Faro,0
+Faro,Guarda,352
+Faro,Leiria,278
+Faro,Lisboa,195
+Faro,Portalegre,228
+Faro,Porto,418
+Faro,Santarém,231
+Faro,Setúbal,168
+Faro,Viana do Castelo,473
+Faro,Vila Real,429
+Faro,Viseu,363
+Lisboa,Aveiro,217
+Lisboa,Braga,320
+Lisboa,Bragança,398
+Lisboa,Beja,135
+Lisboa,Castelo Branco,186
+Lisboa,Coimbra,176
+Lisboa,Évora,107
+Lisboa,Guarda,257
+Lisboa,Leiria,116
+Lisboa,Lisboa,0
+Lisboa,Portalegre,160
+Lisboa,Porto,274
+Lisboa,Santarém,70
+Lisboa,Setúbal,30
+Lisboa,Viana do Castelo,330
+Lisboa,Vila Real,310
+Lisboa,Viseu,240
+Braga,Aveiro,102
+Braga,Braga,0
+Braga,Bragança,100
+Braga,Beja,395
+Braga,Castelo Branco,204
+Braga,Coimbra,149
+Braga,Évora,334
+Braga,Guarda,148
+Braga,Leiria,202
+Braga,Portalegre,264
+Braga,Porto,47
+Braga,Santarém,257
+Braga,Setúbal,337
+Braga,Viana do Castelo,37
+Braga,Vila Real,64
+Braga,Viseu,107
+Bragança,Aveiro,204
+Bragança,Bragança,0
+Bragança,Beja,430
+Bragança,Castelo Branco,227
+Bragança,Coimbra,225
+Bragança,Évora,372
+Bragança,Guarda,146
+Bragança,Leiria,286
+Bragança,Portalegre,284
+Bragança,Porto,171
+Bragança,Santarém,328
+Bragança,Setúbal,407
+Bragança,Viana do Castelo,172
+Bragança,Vila Real,100
+Bragança,Viseu,160
+Beja,Aveiro,300
+Beja,Beja,0
+Beja,Castelo Branco,205
+Beja,Coimbra,248
+Beja,Évora,62
+Beja,Guarda,284
+Beja,Leiria,210
+Beja,Portalegre,147
+Beja,Porto,355
+Beja,Santarém,153
+Beja,Setúbal,106
+Beja,Viana do Castelo,416
+Beja,Vila Real,365
+Beja,Viseu,293
+Castelo Branco,Aveiro,133
+Castelo Branco,Castelo Branco,0
+Castelo Branco,Coimbra,90
+Castelo Branco,Évora,143
+Castelo Branco,Guarda,82
+Castelo Branco,Leiria,113
+Castelo Branco,Portalegre,58
+Castelo Branco,Porto,177
+Castelo Branco,Santarém,120
+Castelo Branco,Setúbal,188
+Castelo Branco,Viana do Castelo,237
+Castelo Branco,Vila Real,165
+Castelo Branco,Viseu,99
+Aveiro,Aveiro,0
+Aveiro,Coimbra,52
+Aveiro,Évora,237
+Aveiro,Guarda,117
+Aveiro,Leiria,100
+Aveiro,Portalegre,181
+Aveiro,Porto,58
+Aveiro,Santarém,156
+Aveiro,Setúbal,236
+Aveiro,Viana do Castelo,118
+Aveiro,Vila Real,105
+Aveiro,Viseu,61
+Coimbra,Coimbra,0
+Coimbra,Évora,185
+Coimbra,Guarda,103
+Coimbra,Leiria,60
+Coimbra,Portalegre,130
+Coimbra,Porto,108
+Coimbra,Santarém,109
+Coimbra,Setúbal,190
+Coimbra,Viana do Castelo,170
+Coimbra,Vila Real,135
+Coimbra,Viseu,65
+Évora,Évora,0
+Évora,Guarda,225
+Évora,Leiria,150
+Évora,Portalegre,90
+Évora,Porto,294
+Évora,Santarém,99
+Évora,Setúbal,85
+Évora,Viana do Castelo,355
+Évora,Vila Real,303
+Évora,Viseu,230
+Guarda,Guarda,0
+Guarda,Leiria,158
+Guarda,Portalegre,141
+Guarda,Porto,134
+Guarda,Santarém,190
+Guarda,Setúbal,265
+Guarda,Viana do Castelo,185
+Guarda,Vila Real,93
+Guarda,Viseu,56
+Leiria,Leiria,0
+Leiria,Portalegre,130
+Leiria,Porto,158
+Leiria,Santarém,57
+Leiria,Setúbal,135
+Leiria,Viana do Castelo,215
+Leiria,Vila Real,194
+Leiria,Viseu,125
+Portalegre,Portalegre,0
+Portalegre,Porto,230
+Portalegre,Santarém,108
+Portalegre,Setúbal,152
+Portalegre,Viana do Castelo,290
+Portalegre,Vila Real,223
+Portalegre,Viseu,156
+Porto,Porto,0
+Porto,Santarém,212
+Porto,Setúbal,293
+Porto,Viana do Castelo,62
+Porto,Vila Real,76
+Porto,Viseu,81
+Santarém,Santarém,0
+Santarém,Setúbal,80
+Santarém,Viana do Castelo,272
+Santarém,Vila Real,242
+Santarém,Viseu,170
+Setúbal,Setúbal,0
+Setúbal,Viana do Castelo,351
+Setúbal,Vila Real,324
+Setúbal,Viseu,251
+Viana do Castelo,Viana do Castelo,0
+Viana do Castelo,Vila Real,100
+Viana do Castelo,Viseu,138
+Vila Real,Vila Real,0
+Vila Real,Viseu,72
+Viseu,Viseu,0
