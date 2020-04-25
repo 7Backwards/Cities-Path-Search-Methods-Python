@@ -22,6 +22,8 @@ class SearchGraphGREEDY(SearchGraph):
                 if path.city1 == node.name or path.city2 == node.name:
                     self.graph[node.name].append(path)
 
+        self.iterationList.append("(" + origin + ")")
+
         self.searchGreedy(self.graph[origin], origin,
                           destiny, origin, self.route)
         self.route.append(origin)
@@ -59,7 +61,7 @@ class SearchGraphGREEDY(SearchGraph):
             self.minDirectDistanceToDestiny.pop(currentNode)
             nextNode = self.getMinDirectDistanceToDestiny(
                 self.minDirectDistanceToDestiny)
-            print(self.minDirectDistanceToDestiny)
+            # print(self.minDirectDistanceToDestiny)
             # print(nextNode)
             # print(self.minDirectDistanceToDestiny)
             if self.searchGreedy(self.graph[nextNode], origin, destiny, nextNode, route) == True:
@@ -77,6 +79,7 @@ class SearchGraphGREEDY(SearchGraph):
 
         minWeight = 100000
         nextCity = ""
+        nextOutPut = ""
 
         nextHopCandidateList = []
 
@@ -91,7 +94,11 @@ class SearchGraphGREEDY(SearchGraph):
         # sorts the array in ascending according to
         # second element
         nextHopCandidateList.sort(key=self.sortSecond)
-        self.iterationList.append(str(nextHopCandidateList))
-        print(nextHopCandidateList)
+        for city, weight in nextHopCandidateList:
+            nextOutPut += "(" + city + ", " + weight + ")"
+
+        self.iterationList.append(nextOutPut)
+        #self.iterationList.append(str(nextHopCandidateList))
+        #print(nextHopCandidateList)
 
         return nextCity
