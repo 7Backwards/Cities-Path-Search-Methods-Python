@@ -9,5 +9,3 @@ class SearchGraph:
         self.selectedPath = []
         self.iterationList = []
 
-    def getSelectedPath(self):
-        return self.selectedPath
