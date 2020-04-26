@@ -113,12 +113,7 @@ class SearchGraphASTAR(SearchGraph):
                             self.pathList.append((total_cost, i, node))
         else:
             while len(queue) > 0:
-                if len(self.pathList) == sys.maxsize:
-    
-                    self.iterationList.clear()
-                    self.iterationList.append("Loop encontrado")
-                    self.pathList.clear()
-                    return  
+            
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
