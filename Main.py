@@ -245,7 +245,8 @@ class StartPage(tk.Frame):
         i = 0
         for item in mapIterationList:
             self.iterationList.insert(i, item)
-            i += 1
+            self.iterationList.insert(i+1, "")
+            i += 2
 
 
 app = Main()
