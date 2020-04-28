@@ -11,7 +11,7 @@ class SearchGraphUCS(SearchGraph):
         self.pathList = []
         self.ucs(origin, destiny,self.isLimited)
         if len(self.pathList) > 0:
-            print(self.pathList)
+            
             truePath = [destiny]
             lookForNode = destiny
             while ( lookForNode != origin):
@@ -37,7 +37,7 @@ class SearchGraphUCS(SearchGraph):
                     if (truePath[i] == pathMap.city1 and truePath[i+1] == pathMap.city2) or (truePath[i] == pathMap.city2 and truePath[i+1] == pathMap.city1):
                         self.selectedPath.append(pathMap)
                 i+=1 
-            print(truePath)
+            
 
         
         
@@ -74,6 +74,8 @@ class SearchGraphUCS(SearchGraph):
         if isLimited == True:
             while len(queue) > 0:
                 
+                #Print here
+                print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
@@ -89,6 +91,8 @@ class SearchGraphUCS(SearchGraph):
         else:
             while len(queue) > 0:
                 
+                #Print here
+                print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
