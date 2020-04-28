@@ -9,7 +9,7 @@ class SearchGraphUCS(SearchGraph):
         super().__init__(debug, nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
         self.pathList = []
-        self.ucs(origin, destiny, self.isLimited)
+        self.ucs(debug, origin, destiny, self.isLimited)
         if len(self.pathList) > 0:
 
             truePath = [destiny]
@@ -62,7 +62,7 @@ class SearchGraphUCS(SearchGraph):
 
         return None
 
-    def ucs(self, origin, destiny, isLimited):
+    def ucs(self, debug, origin, destiny, isLimited):
         visited = set()
         queue = []
         queue.append((0, origin))
@@ -71,7 +71,8 @@ class SearchGraphUCS(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                print(str(queue.copy()))
+                if debug == True:
+                    print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
@@ -92,7 +93,8 @@ class SearchGraphUCS(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                print(str(queue.copy()))
+                if debug == True:
+                    print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))

@@ -11,9 +11,9 @@ class SearchGraphASTAR(SearchGraph):
         self.isLimited = isLimited
         self.pathList = []
         self.iterationList = []
-        self.astar(origin, destiny, self.isLimited)
+        self.astar(debug, origin, destiny, self.isLimited)
         if len(self.pathList) > 0:
-            print(self.pathList)
+            # print(self.pathList)
             truePath = [destiny]
             lookForNode = destiny
             while (lookForNode != origin):
@@ -94,9 +94,8 @@ class SearchGraphASTAR(SearchGraph):
             counter += 1
 
         self.iterationList = newIterationList.copy()
-        print(self.iterationList)
 
-    def astar(self, origin, destiny, isLimited):
+    def astar(self, debug, origin, destiny, isLimited):
 
         visited = set()
         queue = []
@@ -106,7 +105,8 @@ class SearchGraphASTAR(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                print(queue.copy())
+                if debug == True:
+                    print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
@@ -129,7 +129,8 @@ class SearchGraphASTAR(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                print(queue.copy())
+                if debug == True:
+                    print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))

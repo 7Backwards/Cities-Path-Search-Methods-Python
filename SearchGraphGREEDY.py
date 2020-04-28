@@ -23,8 +23,11 @@ class SearchGraphGREEDY(SearchGraph):
                     self.graph[node.name].append(path)
 
         self.iterationList.append("(" + origin + ")")
+        if debug == True:
+            print(nameMethod)
+            print("(" + origin + ")")
 
-        self.searchGreedy(self.graph[origin], origin,
+        self.searchGreedy(debug, self.graph[origin], origin,
                           destiny, origin, self.route)
         self.route.append(origin)
         self.route.reverse()
@@ -38,7 +41,7 @@ class SearchGraphGREEDY(SearchGraph):
                     self.selectedPath.append(path)
             count = count + 1
 
-    def searchGreedy(self, paths, origin, destiny, currentNode, route):
+    def searchGreedy(self, debug, paths, origin, destiny, currentNode, route):
         if currentNode == destiny:
             print("Arrived - " + destiny)
             return True
@@ -59,12 +62,12 @@ class SearchGraphGREEDY(SearchGraph):
 
         if len(self.minDirectDistanceToDestiny) > 0:
             self.minDirectDistanceToDestiny.pop(currentNode)
-            nextNode = self.getMinDirectDistanceToDestiny(
-                self.minDirectDistanceToDestiny)
+            nextNode = self.getMinDirectDistanceToDestiny(debug,
+                                                          self.minDirectDistanceToDestiny)
             # print(self.minDirectDistanceToDestiny)
             # print(nextNode)
             # print(self.minDirectDistanceToDestiny)
-            if self.searchGreedy(self.graph[nextNode], origin, destiny, nextNode, route) == True:
+            if self.searchGreedy(debug, self.graph[nextNode], origin, destiny, nextNode, route) == True:
                 route.append(nextNode)
                 return True
 
@@ -75,7 +78,7 @@ class SearchGraphGREEDY(SearchGraph):
     def sortSecond(self, val):
         return val[1]
 
-    def getMinDirectDistanceToDestiny(self, minDirectDistanceToDestiny):
+    def getMinDirectDistanceToDestiny(self, debug, minDirectDistanceToDestiny):
 
         minWeight = 100000
         nextCity = ""
@@ -98,6 +101,8 @@ class SearchGraphGREEDY(SearchGraph):
             nextOutPut += "(" + city + ", " + weight + ")"
 
         self.iterationList.append(nextOutPut)
+        if debug == True:
+            print(nextOutPut)
         # self.iterationList.append(str(nextHopCandidateList))
         # print(nextHopCandidateList)
 

@@ -46,6 +46,9 @@ class SearchGraphIDDFS(SearchGraph):
             self.route.append(origin)
             self.route.reverse()
 
+        if debug == True:
+            print(nameMethod)
+
         count = 0
         while count < len(self.route)-1:
             for path in self.countryMap.pathsMap:
@@ -63,8 +66,12 @@ class SearchGraphIDDFS(SearchGraph):
 
             iterationSrt = iterationSrt + "]"
             self.iterationList.append(iterationSrt)
+            if debug == True:
+                print(iterationSrt)
 
         self.iterationList.append("Total tries = " + str(self.tries))
+        if debug == True:
+            print("Total tries = " + str(self.tries))
 
     def searchIDDFSLimited(self, debug, paths, origin, destiny, currentNode, limit, route):
 
@@ -97,18 +104,11 @@ class SearchGraphIDDFS(SearchGraph):
 
     def searchIDDFSNotLimited(self, debug, paths, origin, destiny, currentNode, route, visited):
 
-        if debug == True:
-            print(currentNode)
         if currentNode == destiny:
             if debug == True:
                 print("Arrived - " + destiny)
             return True
         visited.append(currentNode)
-
-        if currentNode == destiny:
-            if debug == True:
-                print("Arrived - " + destiny)
-            return True
 
         for path in paths:
             if path.city1 == currentNode and path.city2 not in visited:
