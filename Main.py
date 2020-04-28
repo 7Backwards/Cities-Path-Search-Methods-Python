@@ -92,6 +92,8 @@ class StartPage(tk.Frame):
         self.directDistancePaths = self.data.mapDirectDistances
         self.searchLimited = tk.BooleanVar()
         self.searchLimited.set(False)
+        self.debug = tk.BooleanVar()
+        self.debug.set(DEBUG)
 
         # Setup GUI
         # Title Label
@@ -137,6 +139,7 @@ class StartPage(tk.Frame):
 
         if (DEBUG == True):
             self.searchLimited.trace('w', lambda *_: print("Value Changed!"))
+            self.debug.trace('w', lambda *_: print("Value Changed!"))
 
         numberCallback = (self.register(self.callbackDigit))
 
@@ -147,14 +150,17 @@ class StartPage(tk.Frame):
         CheckBoxLimitedSearch = ttk.Checkbutton(
             backButtonFrame, text="Limited search", variable=self.searchLimited, command=self.getBool)
 
-        IddfsBtn = ttk.Button(methodButtonFrame, text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS("Iterative Deepening Depth First Search",
+        CheckBoxDebugConsole = ttk.Checkbutton(
+            backButtonFrame, text="Console Debug", variable=self.debug, command=self.getBool)
+
+        IddfsBtn = ttk.Button(methodButtonFrame, text="IDDFS", command=lambda: self.setCanvasNewMap(IDDFS(self.debug.get(), "Iterative Deepening Depth First Search",
                                                                                                           self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.InputLimitedSearch.get())))
-        UcsBtn = ttk.Button(methodButtonFrame, text="UCS", command=lambda: self.setCanvasNewMap(UCS(
-            "Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
-        GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY(
-            "Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
-        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=lambda: self.setCanvasNewMap(ASTAR(
-            "A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
+        UcsBtn = ttk.Button(methodButtonFrame, text="UCS", command=lambda: self.setCanvasNewMap(UCS(self.debug.get(),
+                                                                                                    "Uniform-Cost Search", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get())))
+        GreedyBtn = ttk.Button(methodButtonFrame, text="Greedy", command=lambda: self.setCanvasNewMap(GREEDY(self.debug.get(),
+                                                                                                             "Greedy", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
+        AstarBtn = ttk.Button(methodButtonFrame, text="A*", command=lambda: self.setCanvasNewMap(ASTAR(self.debug.get(),
+                                                                                                       "A-Star", self.fromCityVar.get(), self.toCityVar.get(), self.Portugal, self.searchLimited.get(), self.directDistancePaths)))
 
         # Grid setup
         self.canvasFrame.grid_columnconfigure(0, weight=1)
@@ -181,12 +187,14 @@ class StartPage(tk.Frame):
         AstarBtn.grid(row=0, column=3, sticky="w", pady=20)
 
         backButtonFrame.grid_columnconfigure(0, weight=1)
-        BackBtn.grid(row=0, column=4, sticky="e", pady=20, padx=20)
-        ClearBtn.grid(row=0, column=3, sticky="e", pady=20)
+        BackBtn.grid(row=0, column=5, sticky="e", pady=20, padx=20)
+        ClearBtn.grid(row=0, column=4, sticky="e", pady=20)
         CheckBoxLimitedSearch.grid(
-            row=0, column=2, sticky="e", pady=20, padx=30)
-        self.InputLimitedSearch.grid(row=0, column=1, sticky="e", pady=20)
-        self.LabelInputLimitedSearch.grid(row=0, column=0, sticky="e", pady=20)
+            row=0, column=3, sticky="e", pady=20, padx=30)
+        self.InputLimitedSearch.grid(row=0, column=2, sticky="e", pady=20)
+        self.LabelInputLimitedSearch.grid(row=0, column=1, sticky="e", pady=20)
+        CheckBoxDebugConsole.grid(
+            row=0, column=0, sticky="e", pady=20, padx=50)
 
     def callbackDigit(self, P):
         if str.isdigit(P) or P == "":
@@ -196,7 +204,8 @@ class StartPage(tk.Frame):
 
     def getBool(self):
         if (DEBUG == True):
-            print(self.searchLimited.get())
+            print("Limited search: " + str(self.searchLimited.get()))
+            print("Console debug: " + str(self.debug.get()))
         if self.searchLimited.get() == True:
             self.InputLimitedSearch.config(state='normal')
         else:

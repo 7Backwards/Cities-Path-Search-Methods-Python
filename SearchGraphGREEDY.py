@@ -4,8 +4,8 @@ from SearchGraph import SearchGraph
 
 class SearchGraphGREEDY(SearchGraph):
 
-    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited, directDistanceHeuristic):
-        super().__init__(nameMethod, origin, destiny, countryMap)
+    def __init__(self, debug, nameMethod, origin, destiny, countryMap, isLimited, directDistanceHeuristic):
+        super().__init__(debug, nameMethod, origin, destiny, countryMap)
 
         self.isLimited = False
 
@@ -98,7 +98,7 @@ class SearchGraphGREEDY(SearchGraph):
             nextOutPut += "(" + city + ", " + weight + ")"
 
         self.iterationList.append(nextOutPut)
-        #self.iterationList.append(str(nextHopCandidateList))
-        #print(nextHopCandidateList)
+        # self.iterationList.append(str(nextHopCandidateList))
+        # print(nextHopCandidateList)
 
         return nextCity
