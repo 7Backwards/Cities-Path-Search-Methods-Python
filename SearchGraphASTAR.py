@@ -81,12 +81,19 @@ class SearchGraphASTAR(SearchGraph):
         
         newIterationItem = []
         newIterationList = []
+        counter = 0
         for item in self.iterationList:
-            for i in item:
-                newIterationItem.append(str(i[2]) + "[" + str(i[1]) + "+" +  str(i[0] - i[1]) + "]=" + str(i[0]))
-            newIterationList.append(str(newIterationItem.copy()))
-            newIterationItem.clear()
-         
+            
+            if counter != len(self.iterationList) -1:
+                for i in item:
+                    
+                    newIterationItem.append(str(i[2]) + "[" + str(i[1]) + "+" +  str(i[0] - i[1]) + "]=" + str(i[0]))
+                newIterationList.append(str(newIterationItem.copy()))
+                newIterationItem.clear()
+            else:
+                newIterationList.append(str(item))
+            counter +=1
+        
         self.iterationList = newIterationList.copy()
         print (self.iterationList)
         
@@ -107,6 +114,10 @@ class SearchGraphASTAR(SearchGraph):
                 if node not in visited:
                     visited.add(node)
                     if node == destiny:
+                        if origin != destiny:
+                            queue.clear()
+                            queue.append((cost, destiny))
+                            self.iterationList.append(str(queue.copy()))
                         return
                     for i in self.neighbors(node):
                         if i not in visited:
@@ -123,6 +134,10 @@ class SearchGraphASTAR(SearchGraph):
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
                 if node == destiny:
+                    if origin != destiny:
+                        queue.clear()
+                        queue.append((cost, destiny))
+                        self.iterationList.append(str(queue.copy()))
                     return
                 for i in self.neighbors(node):
                     total_cost = cost + self.get_cost(node, i)

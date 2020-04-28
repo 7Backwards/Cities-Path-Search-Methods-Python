@@ -82,6 +82,10 @@ class SearchGraphUCS(SearchGraph):
                 if node not in visited:
                     visited.add(node)
                     if node == destiny:
+                        if origin != destiny:
+                            queue.clear()
+                            queue.append((cost, destiny))
+                            self.iterationList.append(str(queue.copy()))
                         return
                     for i in self.neighbors(node):
                         if i not in visited:
@@ -97,6 +101,10 @@ class SearchGraphUCS(SearchGraph):
                 cost, node = min(queue)
                 queue.remove(min(queue))
                 if node == destiny:
+                    if origin != destiny:
+                        queue.clear()
+                        queue.append((cost, destiny))
+                        self.iterationList.append(str(queue.copy()))                    
                     return
                 for i in self.neighbors(node):
                     total_cost = cost + self.get_cost(node, i)
