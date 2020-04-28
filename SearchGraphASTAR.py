@@ -98,6 +98,9 @@ class SearchGraphASTAR(SearchGraph):
         
         if isLimited == True:
             while len(queue) > 0:
+                
+                #Print here
+                print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
@@ -113,7 +116,9 @@ class SearchGraphASTAR(SearchGraph):
                             self.pathList.append((total_cost, i, node))
         else:
             while len(queue) > 0:
-            
+                
+                #Print here
+                print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
