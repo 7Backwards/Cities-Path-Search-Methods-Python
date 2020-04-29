@@ -205,7 +205,7 @@ class StartPage(tk.Frame):
             return False
 
     def getBool(self):
-        if (DEBUG == True):
+        if (self.debug.get() == True):
             print("Limited search: " + str(self.searchLimited.get()))
             print("Console debug: " + str(self.debug.get()))
         if self.searchLimited.get() == True:
@@ -257,7 +257,7 @@ class StartPage(tk.Frame):
 
         matplotlib.pyplot.close('all')
 
-        if (DEBUG == True):
+        if (self.debug.get() == True):
             print(searchMethod.nameMethod)
             print("From city: {} | To city: {}".format(
                 self.fromCityVar.get(), self.toCityVar.get()))
@@ -266,7 +266,7 @@ class StartPage(tk.Frame):
         i = 0
         for item in mapIterationList:
             self.iterationList.insert(i, item)
-            if DEBUG == True:
+            if self.debug.get() == True:
                 print(item)
             self.iterationList.insert(i+1, "")
             i += 2
