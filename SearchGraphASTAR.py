@@ -5,13 +5,13 @@ from SearchGraph import SearchGraph
 
 class SearchGraphASTAR(SearchGraph):
 
-    def __init__(self, debug, nameMethod, origin, destiny, countryMap, isLimited, directDistanceHeuristic):
-        super().__init__(debug, nameMethod, origin, destiny, countryMap)
+    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited, directDistanceHeuristic):
+        super().__init__(nameMethod, origin, destiny, countryMap)
         self.directDistancePaths = directDistanceHeuristic
         self.isLimited = isLimited
         self.pathList = []
         self.iterationList = []
-        self.astar(debug, origin, destiny, self.isLimited)
+        self.astar(origin, destiny, self.isLimited)
         if len(self.pathList) > 0:
             # print(self.pathList)
             truePath = [destiny]
@@ -95,7 +95,7 @@ class SearchGraphASTAR(SearchGraph):
 
         self.iterationList = newIterationList.copy()
 
-    def astar(self, debug, origin, destiny, isLimited):
+    def astar(self, origin, destiny, isLimited):
 
         visited = set()
         queue = []
@@ -105,8 +105,7 @@ class SearchGraphASTAR(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                if debug == True:
-                    print(queue.copy())
+                # print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))
@@ -129,8 +128,7 @@ class SearchGraphASTAR(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                if debug == True:
-                    print(queue.copy())
+                # print(queue.copy())
                 self.iterationList.append(queue.copy())
                 cost_to_destiny, cost, node = min(queue)
                 queue.remove(min(queue))

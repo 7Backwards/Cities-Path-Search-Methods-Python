@@ -5,11 +5,11 @@ from SearchGraph import SearchGraph
 
 class SearchGraphUCS(SearchGraph):
 
-    def __init__(self, debug, nameMethod, origin, destiny, countryMap, isLimited):
-        super().__init__(debug, nameMethod, origin, destiny, countryMap)
+    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited):
+        super().__init__(nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
         self.pathList = []
-        self.ucs(debug, origin, destiny, self.isLimited)
+        self.ucs(origin, destiny, self.isLimited)
         if len(self.pathList) > 0:
 
             truePath = [destiny]
@@ -62,7 +62,7 @@ class SearchGraphUCS(SearchGraph):
 
         return None
 
-    def ucs(self, debug, origin, destiny, isLimited):
+    def ucs(self, origin, destiny, isLimited):
         visited = set()
         queue = []
         queue.append((0, origin))
@@ -71,8 +71,7 @@ class SearchGraphUCS(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                if debug == True:
-                    print(str(queue.copy()))
+                # print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))
@@ -93,8 +92,7 @@ class SearchGraphUCS(SearchGraph):
             while len(queue) > 0:
 
                 # Print here
-                if debug == True:
-                    print(str(queue.copy()))
+                # print(str(queue.copy()))
                 self.iterationList.append(str(queue.copy()))
                 cost, node = min(queue)
                 queue.remove(min(queue))

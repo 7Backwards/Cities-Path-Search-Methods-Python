@@ -4,8 +4,8 @@ from SearchGraph import SearchGraph
 
 class SearchGraphIDDFS(SearchGraph):
 
-    def __init__(self, debug, nameMethod, origin, destiny, countryMap, isLimited=True, limitLevel=0):
-        super().__init__(debug, nameMethod, origin, destiny, countryMap)
+    def __init__(self, nameMethod, origin, destiny, countryMap, isLimited=True, limitLevel=0):
+        super().__init__(nameMethod, origin, destiny, countryMap)
         self.isLimited = isLimited
         self.limit = 0
 
@@ -33,21 +33,18 @@ class SearchGraphIDDFS(SearchGraph):
                 print(item.city1 + " |  " + item.city2)
         '''
         if self.isLimited:
-            self.searchIDDFSLimited(debug,
-                                    self.graph[origin], origin, destiny, origin, self.limit, self.route)
+            self.searchIDDFSLimited(
+                self.graph[origin], origin, destiny, origin, self.limit, self.route)
             self.route.append(origin)
             self.route.reverse()
             # Alternative -> self.route(::-1)
             # print(self.route)
 
         else:
-            self.searchIDDFSNotLimited(debug,
-                                       self.graph[origin], origin, destiny, origin, self.route, self.visited)
+            self.searchIDDFSNotLimited(
+                self.graph[origin], origin, destiny, origin, self.route, self.visited)
             self.route.append(origin)
             self.route.reverse()
-
-        if debug == True:
-            print(nameMethod)
 
         count = 0
         while count < len(self.route)-1:
@@ -66,57 +63,46 @@ class SearchGraphIDDFS(SearchGraph):
 
             iterationSrt = iterationSrt + "]"
             self.iterationList.append(iterationSrt)
-            if debug == True:
-                print(iterationSrt)
 
         self.iterationList.append("Total tries = " + str(self.tries))
-        if debug == True:
-            print("Total tries = " + str(self.tries))
 
-    def searchIDDFSLimited(self, debug, paths, origin, destiny, currentNode, limit, route):
+    def searchIDDFSLimited(self, paths, origin, destiny, currentNode, limit, route):
 
         if currentNode == destiny:
-            if debug == True:
-                print("Arrived - " + destiny)
+            # print("Arrived - " + destiny)
             return True
         elif limit == 0:
-            if debug == True:
-                print("Limit reached!!!")
+            # print("Limit reached!!!")
             self.tries += 1
             route.clear()
             return False
 
         for path in paths:
             if path.city1 == currentNode:
-                if self.searchIDDFSLimited(debug, self.graph[path.city2], origin, destiny, path.city2, limit-1, route) == True:
-                    if debug == True:
-                        print(path.city2)
+                if self.searchIDDFSLimited(self.graph[path.city2], origin, destiny, path.city2, limit-1, route) == True:
                     route.append(path.city2)
                     return True
             else:
-                if self.searchIDDFSLimited(debug, self.graph[path.city1], origin, destiny, path.city1, limit-1, route) == True:
-                    if debug == True:
-                        print(path.city1)
+                if self.searchIDDFSLimited(self.graph[path.city1], origin, destiny, path.city1, limit-1, route) == True:
                     route.append(path.city1)
                     return True
 
         return False
 
-    def searchIDDFSNotLimited(self, debug, paths, origin, destiny, currentNode, route, visited):
+    def searchIDDFSNotLimited(self, paths, origin, destiny, currentNode, route, visited):
 
         if currentNode == destiny:
-            if debug == True:
-                print("Arrived - " + destiny)
+            #print("Arrived - " + destiny)
             return True
         visited.append(currentNode)
 
         for path in paths:
             if path.city1 == currentNode and path.city2 not in visited:
-                if self.searchIDDFSNotLimited(debug, self.graph[path.city2], origin, destiny, path.city2, route, visited) == True:
+                if self.searchIDDFSNotLimited(self.graph[path.city2], origin, destiny, path.city2, route, visited) == True:
                     route.append(path.city2)
                     return True
             elif path.city2 == currentNode and path.city1 not in visited:
-                if self.searchIDDFSNotLimited(debug, self.graph[path.city1], origin, destiny, path.city1, route, visited) == True:
+                if self.searchIDDFSNotLimited(self.graph[path.city1], origin, destiny, path.city1, route, visited) == True:
                     route.append(path.city1)
                     return True
 
