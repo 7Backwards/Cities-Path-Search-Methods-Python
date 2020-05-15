@@ -138,8 +138,7 @@ class SearchGraphASTAR(SearchGraph):
                         self.iterationList.append(str(queue.copy()))
                     return
                 for i in self.neighbors(node):
-                    total_cost = cost + self.get_cost(node, i)
-                    cost_to_destiny = total_cost + \
-                        self.get_cost_to_destiny(node, destiny)
-                    queue.append((cost_to_destiny, total_cost, i))
-                    self.pathList.append((total_cost, i, node))
+                        total_cost = cost + self.get_cost(node, i)
+                        cost_to_destiny = total_cost + self.get_cost_to_destiny(i, destiny)
+                        queue.append((cost_to_destiny, total_cost, i))
+                        self.pathList.append((total_cost, i, node))
