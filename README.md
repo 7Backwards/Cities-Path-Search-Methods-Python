@@ -4,9 +4,9 @@
 ```alpha
  - Cities Path Search Methods Project.
  - Done as the final project for the subject of Artificial Intelligence on the 3rd year of degree.
- - Created in Python
+ - Created in Python.
  - The application takes two cities and a search method input and draws the resulting path and iteration list.
- - The Search Methods supported are: IDDFS, UCS, Greedy, A*
+ - The Search Methods supported are: IDDFS, UCS, Greedy, A*.
 ```
 
 # Application preview
